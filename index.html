@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -18,22 +17,26 @@
       scroll-behavior: smooth;
       position: relative;
       overflow-x: hidden;
+      font-family: "Inter", sans-serif;
     }
+
     .dark-mode {
       background-color: #121212;
       color: #f0f0f0;
     }
-    section {
-      padding: 60px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-      position: relative;
-      z-index: 1; /* بالای پس‌زمینه */
-    }
-    .dark-mode section {
-      border-color: rgba(255,255,255,0.15);
+
+    /* ===== HERO BACKGROUND ===== */
+    .hero-bg {
+      background-image: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.2) blur(2px);
+      position: fixed;
+      inset: 0;
+      z-index: -1;
     }
 
-    /* ======== CAPSULE CARD ======== */
+    /* ===== CAPSULE CARD ===== */
     .capsule-card {
       transition: all 0.3s ease;
     }
@@ -42,7 +45,7 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.15);
     }
 
-    /* ======== FLASHCARD ======== */
+    /* ===== FLASHCARD ===== */
     .flashcard {
       width: 320px;
       height: 200px;
@@ -74,15 +77,20 @@
       color: #aaa;
     }
 
-    /* ===== HERO BACKGROUND ===== */
-    .hero-bg {
-      background-image: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
-      background-size: cover;
-      background-position: center;
-      filter: brightness(0.2) blur(2px); /* کم‌رنگ و مات */
-      position: fixed;
-      inset: 0;
-      z-index: -1; /* پشت تمام محتوا */
+    section {
+      padding: 60px 0;
+      border-radius: 12px;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 20px;
+      background-color: rgba(255,255,255,0.85); /* لایت مود روشن */
+      color: #000; /* متن سیاه */
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .dark-mode section {
+      background-color: rgba(18,18,18,0.7); /* دارک مود تیره */
+      color: #f0f0f0; /* متن سفید */
+      border-color: rgba(255,255,255,0.15);
     }
   </style>
 </head>
@@ -111,6 +119,7 @@
       </div>
     </div>
   </nav>
+
 
   <!-- ===== MAIN CONTENT ===== -->
   <main class="container mt-5 pt-5">
@@ -144,7 +153,7 @@
                 <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
               </div>
             </div>
-          </div>
+
         </div>
 
         <div class="col-md-4">
