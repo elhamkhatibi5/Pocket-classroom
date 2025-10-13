@@ -1,0 +1,149 @@
+
+/* ===== Pocket Classroom Styles ===== */
+
+/* --- Base --- */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Inter", "Segoe UI", sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #fff;
+  --text: #212529;
+  --border: #dee2e6;
+}
+
+body.dark-mode {
+  --bg: #121212;
+  --card-bg: #1e1e1e;
+  --text: #e9ecef;
+  --border: #333;
+}
+
+/* --- Sections --- */
+.tab-section {
+  display: none;
+}
+.tab-section.active {
+  display: block;
+}
+
+.subtab,
+.learn-panel {
+  display: none;
+}
+.subtab.active,
+.learn-panel.active {
+  display: block;
+}
+
+/* --- Navbar --- */
+.navbar-brand strong {
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
+}
+
+.navbar .nav-link.active {
+  font-weight: 600;
+  color: #0dcaf0 !important;
+}
+
+.navbar-dark .nav-link:hover {
+  color: #0dcaf0 !important;
+}
+
+/* --- Buttons & Cards --- */
+.btn {
+  border-radius: 0.5rem;
+}
+
+.card {
+  border-radius: 0.75rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+/* --- Forms --- */
+.form-control,
+.form-select {
+  border-radius: 0.5rem;
+}
+
+/* --- Flashcard Display --- */
+.flashcard {
+  width: 300px;
+  height: 180px;
+  background-color: var(--card-bg);
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* flipped state */
+.flashcard.flip {
+  transform: rotateY(180deg);
+}
+
+.flashcard::before,
+.flashcard::after {
+  content: attr(data-text);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flashcard::after {
+  transform: rotateY(180deg);
+  background-color: var(--card-bg);
+}
+
+/* --- Learn Tabs --- */
+.learn-panel input[type="text"] {
+  border-radius: 0.5rem;
+}
+
+/* --- Progress & States --- */
+.progress {
+  height: 6px;
+  border-radius: 3px;
+}
+
+/* --- Empty Library --- */
+#capsuleGrid .text-center {
+  background: var(--card-bg);
+  border: 2px dashed var(--border);
+  border-radius: 0.75rem;
+}
+
+/* --- Footer --- */
+footer {
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 576px) {
+  .flashcard {
+    width: 100%;
+    height: 150px;
+  }
+}
