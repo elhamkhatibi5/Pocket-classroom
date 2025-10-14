@@ -194,6 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ===== Flashcard / Quiz Editing =====
   function addFlashcard() {
     if (!currentCapsuleId) return alert("Save capsule first!");
     const question = prompt("Enter flashcard question:");
@@ -248,6 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderQuizList(c.quiz);
   }
 
+  // ===== Save Capsule =====
   function saveCapsule() {
     const meta = {
       title: titleInput.value.trim(),
@@ -279,6 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
     alert("Capsule saved!");
   }
 
+  // ===== Learn Mode =====
   function renderLearnSelector() {
     learnSelector.innerHTML = `<option value="">Select Capsule</option>`;
     capsules.forEach(c => {
@@ -422,4 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   });
 
-  //
+  // ===== Initial Render =====
+  renderLibrary();
+  renderLearnSelector();
+});
