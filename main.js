@@ -1,43 +1,425 @@
 
-// ===== main.js =====
+document.addEventListener("DOMContentLoaded", () => {
+  const $ = s => document.querySelector(s);
+  const $$ = s => document.querySelectorAll(s);
 
-// ===== Shortcuts ===== const $ = s => document.querySelector(s); const $$ = s => document.querySelectorAll(s);
+  // ===== Load Capsules or add samples if empty =====
+  let storedCapsules = JSON.parse(localStorage.getItem("capsules"));
+  let capsules = storedCapsules && storedCapsules.length > 0 ? storedCapsules : [
+    {
+      id: crypto.randomUUID(),
+      meta: { title: "Biology Basics", subject: "Biology", level: "Beginner", desc: "Intro to cells and life." },
+      notes: ["Cells are the basic unit of life.", "DNA contains genetic info.", "Photosynthesis occurs in chloroplasts."],
+      flashcards: [
+        { question: "Powerhouse of the cell?", options: ["Nucleus","Mitochondria","Ribosome"], answer: "Mitochondria" },
+        { question: "Which organelle contains DNA?", options: ["Nucleus","Mitochondria","Lysosome"], answer: "Nucleus" }
+      ],
+      quiz: [
+        { question: "Photosynthesis occurs in?", options: ["Chloroplast","Mitochondria","Nucleus"], answer: "Chloroplast" }
+      ]
+    },
+    {
+      id: crypto.randomUUID(),
+      meta: { title: "Basic Algebra", subject: "Math", level: "Beginner", desc: "Intro to algebra expressions." },
+      notes: ["Variables represent unknowns.", "Equations balance both sides.", "Simplify expressions to combine like terms."],
+      flashcards: [
+        { question: "Solve x+5=12. x=?", options: ["5","7","12"], answer: "7" },
+        { question: "Simplify 2x + 3x", options: ["5x","6x","x"], answer: "5x" }
+      ],
+      quiz: [
+        { question: "2(x+3) = ?", options: ["2x+3","2x+6","x+6"], answer: "2x+6" }
+      ]
+    },
+    {
+      id: crypto.randomUUID(),
+      meta: { title: "World History", subject: "History", level: "Intermediate", desc: "20th century key events." },
+      notes: ["WWI began in 1914.", "Great Depression started in 1929.", "WWII ended in 1945."],
+      flashcards: [
+        { question: "When did WWI start?", options: ["1914","1918","1939"], answer: "1914" },
+        { question: "When did WWII end?", options: ["1945","1939","1918"], answer: "1945" }
+      ],
+      quiz: [
+        { question: "The Great Depression began in?", options: ["1929","1914","1945"], answer: "1929" }
+      ]
+    }
+  ];
 
-// ===== State ===== let capsules = [ { title: "Biology Basics", subject: "Biology", level: "Beginner", description: "Learn the foundation of cells, plants, and life forms.", notes: [ "Cells are the building blocks of life.", "Photosynthesis creates food for plants.", "Energy flows through food chains." ], flashcards: [ { question: "What is the powerhouse of the cell?", answer: "Mitochondria" }, { question: "What process do plants use to make food?", answer: "Photosynthesis" }, { question: "Cells divide by?", answer: "Mitosis" } ], quiz: [ { question: "What is the basic unit of life?", options: ["Cell", "Organ", "Tissue"], answer: "Cell" }, { question: "Photosynthesis occurs in?", options: ["Mitochondria", "Chloroplast", "Nucleus"], answer: "Chloroplast" }, { question: "DNA stands for?", options: ["Deoxyribonucleic Acid", "Ribonucleic Acid", "Protein"], answer: "Deoxyribonucleic Acid" } ] }, { title: "Math Geometry", subject: "Math", level: "Intermediate", description: "Shapes, theorems, and geometry principles made simple.", notes: ["Triangles have 3 sides.", "Pythagoras theorem."], flashcards: [ { question: "Sum of angles in triangle?", answer: "180°" }, { question: "Diagonal of square formula?", answer: "side*sqrt(2)" } ], quiz: [ { question: "A square has how many sides?", options: ["3", "4", "5"], answer: "4" }, { question: "Theorem: a²+b²=?", options: ["c²", "a²", "b²"], answer: "c²" } ] }, { title: "English Grammar", subject: "English", level: "Beginner", description: "Master sentence structure and tenses quickly.", notes: ["A sentence has a subject and predicate.", "Tenses describe time."], flashcards: [ { question: "Past tense of 'go'?", answer: "went" }, { question: "Plural of 'child'?", answer: "children" } ], quiz: [ { question: "She ____ happy.", options: ["is", "are", "am"], answer: "is" }, { question: "I ___ to school yesterday.", options: ["go", "went", "gone"], answer: "went" } ] } ];
+  let currentCapsuleId = null;
+  let currentFlashIndex = 0;
+  let flashSide = "front";
 
-let currentCapsule = capsules[0]; let currentCardIndex = 0; let showingAnswer = false; let currentQuizIndex = 0;
+  // ===== Elements =====
+  const capsuleGrid = $("#capsuleGrid");
+  const newCapsuleBtn = $("#newCapsuleBtn");
+  const saveCapsuleBtn = $("#saveCapsuleBtn");
+  const searchCapsule = $("#searchCapsule");
+  const importInput = $("#importInput");
+  const exportBtn = $("#exportBtn");
 
-// ===== Elements ===== const flashcardDisplay = $('#flashcardDisplay'); const prevCardBtn = $('#prevCardBtn'); const nextCardBtn = $('#nextCardBtn'); const flipCardBtn = $('#flipCardBtn'); const notesList = $('#notesList'); const learnSelector = $('#learnSelector'); const quizContainer = $('#quizContainer'); const flashcardsList = $('#flashcardsList'); const addFlashcardBtn = $('#addFlashcardBtn'); const quizList = $('#quizList'); const addQuestionBtn = $('#addQuestionBtn');
+  const titleInput = $("#titleInput");
+  const subjectInput = $("#subjectInput");
+  const levelInput = $("#levelInput");
+  const descInput = $("#descInput");
 
-// Progress bars const flashcardProgress = document.createElement('div'); flashcardProgress.className = 'progress mb-2'; flashcardProgress.innerHTML = '<div class="progress-bar" role="progressbar" style="width:0%"></div>'; flashcardDisplay.parentNode.insertBefore(flashcardProgress, flashcardDisplay);
+  const notesInput = $("#notesInput");
+  const flashcardsList = $("#flashcardsList");
+  const addFlashcardBtn = $("#addFlashcardBtn");
 
-const quizProgress = document.createElement('div'); quizProgress.className = 'progress mb-2'; quizProgress.innerHTML = '<div class="progress-bar bg-success" role="progressbar" style="width:0%"></div>'; quizContainer.parentNode.insertBefore(quizProgress, quizContainer);
+  const quizList = $("#quizList");
+  const addQuestionBtn = $("#addQuestionBtn");
 
-// ===== Functions ===== function updateLearnMode() { // Notes notesList.innerHTML = ''; currentCapsule.notes.forEach(note => { const li = document.createElement('li'); li.className = 'list-group-item'; li.innerText = note; notesList.appendChild(li); });
+  const learnSelector = $("#learnSelector");
+  const notesList = $("#notesList");
+  const flashcardDisplay = $("#flashcardDisplay");
+  const prevCardBtn = $("#prevCardBtn");
+  const flipCardBtn = $("#flipCardBtn");
+  const nextCardBtn = $("#nextCardBtn");
+  const quizContainer = $("#quizContainer");
 
-// Flashcards reset currentCardIndex = 0; showingAnswer = false; showFlashcard();
+  // ===== Helpers =====
+  function saveToStorage() {
+    localStorage.setItem("capsules", JSON.stringify(capsules));
+  }
 
-// Quiz reset currentQuizIndex = 0; renderQuiz(); }
+  function clearAuthorForm() {
+    currentCapsuleId = null;
+    titleInput.value = "";
+    subjectInput.value = "";
+    levelInput.value = "Beginner";
+    descInput.value = "";
+    notesInput.value = "";
+    flashcardsList.innerHTML = "";
+    quizList.innerHTML = "";
+  }
 
-function showFlashcard() { if (!currentCapsule.flashcards.length) { flashcardDisplay.innerText = 'No flashcards'; flashcardProgress.firstElementChild.style.width = '0%'; return; } const card = currentCapsule.flashcards[currentCardIndex]; flashcardDisplay.innerText = showingAnswer ? card.answer : card.question; flashcardProgress.firstElementChild.style.width = ${((currentCardIndex+1)/currentCapsule.flashcards.length)*100}%; }
+  function renderLibrary(filter = "") {
+    capsuleGrid.innerHTML = "";
+    const filtered = capsules.filter(c => c.meta.title.toLowerCase().includes(filter.toLowerCase()));
+    if (filtered.length === 0) {
+      capsuleGrid.innerHTML = `<p class="text-muted">No capsules found.</p>`;
+      return;
+    }
+    filtered.forEach(c => {
+      const col = document.createElement("div");
+      col.className = "col-md-4";
+      col.innerHTML = `
+        <div class="card shadow-sm h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">${c.meta.title}</h5>
+            <p class="card-text mb-1"><strong>Subject:</strong> ${c.meta.subject}</p>
+            <p class="card-text mb-1"><strong>Level:</strong> ${c.meta.level}</p>
+            <p class="card-text text-truncate">${c.meta.desc}</p>
+            <div class="mt-auto d-flex justify-content-between">
+              <button class="btn btn-sm btn-primary view-btn"><i class="bi bi-eye"></i> Learn</button>
+              <button class="btn btn-sm btn-warning edit-btn"><i class="bi bi-pencil-square"></i> Edit</button>
+              <button class="btn btn-sm btn-danger del-btn"><i class="bi bi-trash"></i> Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
+      col.querySelector(".view-btn").addEventListener("click", () => selectLearn(c.id));
+      col.querySelector(".edit-btn").addEventListener("click", () => loadCapsuleToAuthor(c.id));
+      col.querySelector(".del-btn").addEventListener("click", () => {
+        if (confirm("Delete this capsule?")) {
+          capsules = capsules.filter(x => x.id !== c.id);
+          saveToStorage();
+          renderLibrary(searchCapsule.value);
+          renderLearnSelector();
+        }
+      });
+      capsuleGrid.appendChild(col);
+    });
+  }
 
-function renderQuiz() { if (!currentCapsule.quiz.length) { quizContainer.innerHTML = '<p>No quiz questions</p>'; quizProgress.firstElementChild.style.width = '0%'; return; } const q = currentCapsule.quiz[currentQuizIndex]; quizContainer.innerHTML = <p><strong>Q${currentQuizIndex+1}:</strong> ${q.question}</p>; const div = document.createElement('div'); q.options.forEach(opt => { const btn = document.createElement('button'); btn.className = 'btn btn-outline-primary btn-sm me-2 mb-1'; btn.innerText = opt; btn.addEventListener('click', () => { if(opt === q.answer) alert('✅ Correct!'); else alert('❌ Wrong!'); currentQuizIndex = (currentQuizIndex+1) % currentCapsule.quiz.length; renderQuiz(); }); div.appendChild(btn); }); quizContainer.appendChild(div); quizProgress.firstElementChild.style.width = ${((currentQuizIndex)/currentCapsule.quiz.length)*100}%; }
+  function loadCapsuleToAuthor(id) {
+    const c = capsules.find(c => c.id === id);
+    if (!c) return;
+    currentCapsuleId = id;
+    titleInput.value = c.meta.title;
+    subjectInput.value = c.meta.subject;
+    levelInput.value = c.meta.level;
+    descInput.value = c.meta.desc;
+    notesInput.value = c.notes.join("\n");
+    renderFlashcardsList(c.flashcards);
+    renderQuizList(c.quiz);
+  }
 
-function populateAuthorFlashcards() { flashcardsList.innerHTML = ''; currentCapsule.flashcards.forEach(fc => { const div = document.createElement('div'); div.className = 'list-group-item d-flex justify-content-between align-items-center'; div.innerText = ${fc.question} → ${fc.answer}; flashcardsList.appendChild(div); }); }
+  function renderFlashcardsList(flashcards) {
+    flashcardsList.innerHTML = "";
+    flashcards.forEach((f, idx) => {
+      const item = document.createElement("div");
+      item.className = "list-group-item d-flex justify-content-between align-items-start";
+      item.innerHTML = `
+        <div>
+          <strong>Q:</strong> ${f.question} <br>
+          <strong>Options:</strong> ${f.options.join(", ")} | <strong>Answer:</strong> ${f.answer}
+        </div>
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-warning edit-flash">Edit</button>
+          <button class="btn btn-danger del-flash">Del</button>
+        </div>
+      `;
+      item.querySelector(".edit-flash").addEventListener("click", () => editFlashcard(idx));
+      item.querySelector(".del-flash").addEventListener("click", () => {
+        capsules.find(c => c.id === currentCapsuleId).flashcards.splice(idx, 1);
+        saveToStorage();
+        renderFlashcardsList(capsules.find(c => c.id === currentCapsuleId).flashcards);
+      });
+      flashcardsList.appendChild(item);
+    });
+  }
 
-function populateAuthorQuiz() { quizList.innerHTML = ''; currentCapsule.quiz.forEach(q => { const div = document.createElement('div'); div.className = 'list-group-item d-flex justify-content-between align-items-center'; div.innerText = ${q.question} → ${q.answer}; quizList.appendChild(div); }); }
+  function renderQuizList(quiz) {
+    quizList.innerHTML = "";
+    quiz.forEach((q, idx) => {
+      const item = document.createElement("div");
+      item.className = "list-group-item d-flex justify-content-between align-items-start";
+      item.innerHTML = `
+        <div>
+          <strong>Q:</strong> ${q.question} <br>
+          <strong>Options:</strong> ${q.options.join(", ")} | <strong>Answer:</strong> ${q.answer}
+        </div>
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-warning edit-quiz">Edit</button>
+          <button class="btn btn-danger del-quiz">Del</button>
+        </div>
+      `;
+      item.querySelector(".edit-quiz").addEventListener("click", () => editQuiz(idx));
+      item.querySelector(".del-quiz").addEventListener("click", () => {
+        capsules.find(c => c.id === currentCapsuleId).quiz.splice(idx, 1);
+        saveToStorage();
+        renderQuizList(capsules.find(c => c.id === currentCapsuleId).quiz);
+      });
+      quizList.appendChild(item);
+    });
+  }
 
-function selectCapsule(title) { currentCapsule = capsules.find(c => c.title === title); updateLearnMode(); populateAuthorFlashcards(); populateAuthorQuiz(); learnSelector.value = currentCapsule.title; }
+  function addFlashcard() {
+    if (!currentCapsuleId) return alert("Save capsule first!");
+    const question = prompt("Enter flashcard question:");
+    if (!question) return;
+    const options = prompt("Enter options separated by comma:").split(",").map(s=>s.trim());
+    if (options.length < 2) return alert("Need at least 2 options!");
+    const answer = prompt(`Enter correct answer (must match one of options):`);
+    if (!options.includes(answer)) return alert("Answer must be one of options!");
+    capsules.find(c => c.id === currentCapsuleId).flashcards.push({ question, options, answer });
+    saveToStorage();
+    renderFlashcardsList(capsules.find(c => c.id === currentCapsuleId).flashcards);
+  }
 
-// ===== Events ===== flashcardDisplay.addEventListener('click', () => { showingAnswer = !showingAnswer; showFlashcard(); }); flipCardBtn.addEventListener('click', () => { showingAnswer = !showingAnswer; showFlashcard(); }); prevCardBtn.addEventListener('click', () => { currentCardIndex = (currentCardIndex - 1 + currentCapsule.flashcards.length) % currentCapsule.flashcards.length; showingAnswer=false; showFlashcard(); }); nextCardBtn.addEventListener('click', () => { currentCardIndex = (currentCardIndex + 1) % currentCapsule.flashcards.length; showingAnswer=false; showFlashcard(); });
+  function editFlashcard(idx) {
+    const c = capsules.find(c => c.id === currentCapsuleId);
+    const f = c.flashcards[idx];
+    const question = prompt("Edit question:", f.question);
+    if (!question) return;
+    const options = prompt("Edit options (comma separated):", f.options.join(",")).split(",").map(s=>s.trim());
+    if (options.length < 2) return alert("Need at least 2 options!");
+    const answer = prompt("Edit correct answer:", f.answer);
+    if (!options.includes(answer)) return alert("Answer must be one of options!");
+    c.flashcards[idx] = { question, options, answer };
+    saveToStorage();
+    renderFlashcardsList(c.flashcards);
+  }
 
-learnSelector.addEventListener('change', e => selectCapsule(e.target.value));
+  function addQuiz() {
+    if (!currentCapsuleId) return alert("Save capsule first!");
+    const question = prompt("Enter quiz question:");
+    if (!question) return;
+    const options = prompt("Enter options separated by comma:").split(",").map(s=>s.trim());
+    if (options.length < 2) return alert("Need at least 2 options!");
+    const answer = prompt(`Enter correct answer (must match one of options):`);
+    if (!options.includes(answer)) return alert("Answer must be one of options!");
+    capsules.find(c => c.id === currentCapsuleId).quiz.push({ question, options, answer });
+    saveToStorage();
+    renderQuizList(capsules.find(c => c.id === currentCapsuleId).quiz);
+  }
 
-addFlashcardBtn.addEventListener('click', () => { const q = prompt('Enter flashcard question:'); if(!q) return; const a = prompt('Enter flashcard answer:'); if(!a) return; currentCapsule.flashcards.push({question:q, answer:a}); populateAuthorFlashcards(); updateLearnMode(); });
+  function editQuiz(idx) {
+    const c = capsules.find(c => c.id === currentCapsuleId);
+    const q = c.quiz[idx];
+    const question = prompt("Edit question:", q.question);
+    if (!question) return;
+    const options = prompt("Edit options (comma separated):", q.options.join(",")).split(",").map(s=>s.trim());
+    if (options.length < 2) return alert("Need at least 2 options!");
+    const answer = prompt("Edit correct answer:", q.answer);
+    if (!options.includes(answer)) return alert("Answer must be one of options!");
+    c.quiz[idx] = { question, options, answer };
+    saveToStorage();
+    renderQuizList(c.quiz);
+  }
 
-addQuestionBtn.addEventListener('click', () => { const question = prompt('Enter quiz question:'); if(!question) return; const answer = prompt('Enter correct answer:'); if(!answer) return; const opts = prompt('Enter options separated by comma:').split(','); currentCapsule.quiz.push({question, answer, options: opts}); populateAuthorQuiz(); updateLearnMode(); });
+  function saveCapsule() {
+    const meta = {
+      title: titleInput.value.trim(),
+      subject: subjectInput.value.trim(),
+      level: levelInput.value,
+      desc: descInput.value.trim()
+    };
+    const notes = notesInput.value.split("\n").filter(n => n.trim() !== "");
+    if (!meta.title) return alert("Title required!");
 
-// Library card buttons document.querySelectorAll('.capsule-card').forEach(card => { const title = card.querySelector('.card-title').innerText; card.querySelector('.btn-outline-primary').addEventListener('click', () => selectCapsule(title)); card.querySelector('.btn-outline-secondary').addEventListener('click', () => { selectCapsule(title); window.scrollTo({top: $('#author').offsetTop-70, behavior:'smooth'}); }); card.querySelector('.btn-outline-danger').addEventListener('click', () => { if(confirm('Delete '+title+'?')) { capsules = capsules.filter(c=>c.title!==title); card.parentElement.remove(); } }); });
+    if (currentCapsuleId) {
+      const c = capsules.find(c => c.id === currentCapsuleId);
+      c.meta = meta;
+      c.notes = notes;
+    } else {
+      const id = crypto.randomUUID();
+      capsules.push({
+        id,
+        meta,
+        notes,
+        flashcards: [],
+        quiz: []
+      });
+      currentCapsuleId = id;
+    }
+    saveToStorage();
+    renderLibrary(searchCapsule.value);
+    renderLearnSelector();
+    alert("Capsule saved!");
+  }
 
-// Initial setup populateAuthorFlashcards(); populateAuthorQuiz(); updateLearnMode();
+  function renderLearnSelector() {
+    learnSelector.innerHTML = `<option value="">Select Capsule</option>`;
+    capsules.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c.id;
+      opt.textContent = c.meta.title;
+      learnSelector.appendChild(opt);
+    });
+  }
 
+  function selectLearn(id) {
+    learnSelector.value = id;
+    renderLearn(id);
+  }
+
+  function renderLearn(id) {
+    const c = capsules.find(c => c.id === id);
+    if (!c) return;
+    currentCapsuleId = id;
+
+    // Notes
+    notesList.innerHTML = "";
+    c.notes.forEach(n => {
+      const li = document.createElement("li");
+      li.className = "list-group-item";
+      li.textContent = n;
+      notesList.appendChild(li);
+    });
+
+    // Flashcards
+    currentFlashIndex = 0;
+    flashSide = "front";
+    renderFlashcard();
+
+    // Quiz
+    renderQuiz(c.quiz);
+  }
+
+  function renderFlashcard() {
+    if (!currentCapsuleId) return;
+    const c = capsules.find(c => c.id === currentCapsuleId);
+    if (c.flashcards.length === 0) {
+      flashcardDisplay.textContent = "No flashcards";
+      return;
+    }
+    const f = c.flashcards[currentFlashIndex];
+    flashcardDisplay.textContent = flashSide === "front" ? f.question : f.answer;
+  }
+
+  function nextFlash() {
+    if (!currentCapsuleId) return;
+    const c = capsules.find(c => c.id === currentCapsuleId);
+    if (c.flashcards.length === 0) return;
+    currentFlashIndex = (currentFlashIndex + 1) % c.flashcards.length;
+    flashSide = "front";
+    renderFlashcard();
+  }
+
+  function prevFlash() {
+    if (!currentCapsuleId) return;
+    const c = capsules.find(c => c.id === currentCapsuleId);
+    if (c.flashcards.length === 0) return;
+    currentFlashIndex = (currentFlashIndex -1 + c.flashcards.length) % c.flashcards.length;
+    flashSide = "front";
+    renderFlashcard();
+  }
+
+  function flipFlash() {
+    flashSide = flashSide === "front" ? "back" : "front";
+    renderFlashcard();
+  }
+
+  function renderQuiz(quiz) {
+    quizContainer.innerHTML = "";
+    if (quiz.length === 0) {
+      quizContainer.textContent = "No quiz questions";
+      return;
+    }
+    quiz.forEach((q, idx) => {
+      const card = document.createElement("div");
+      card.className = "card mb-2 p-2";
+      card.innerHTML = `<strong>${q.question}</strong>`;
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "btn btn-sm btn-outline-primary m-1";
+        btn.textContent = opt;
+        btn.addEventListener("click", () => {
+          if (opt === q.answer) {
+            btn.classList.remove("btn-outline-primary");
+            btn.classList.add("btn-success");
+          } else {
+            btn.classList.remove("btn-outline-primary");
+            btn.classList.add("btn-danger");
+          }
+        });
+        card.appendChild(btn);
+      });
+      quizContainer.appendChild(card);
+    });
+  }
+
+  // ===== Events =====
+  newCapsuleBtn.addEventListener("click", clearAuthorForm);
+  saveCapsuleBtn.addEventListener("click", saveCapsule);
+  searchCapsule.addEventListener("input", () => renderLibrary(searchCapsule.value));
+  addFlashcardBtn.addEventListener("click", addFlashcard);
+  addQuestionBtn.addEventListener("click", addQuiz);
+
+  prevCardBtn.addEventListener("click", prevFlash);
+  nextCardBtn.addEventListener("click", nextFlash);
+  flipCardBtn.addEventListener("click", flipFlash);
+
+  exportBtn.addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify(capsules, null, 2)], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "capsules.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  importInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        if (Array.isArray(imported)) {
+          capsules = imported;
+          saveToStorage();
+          renderLibrary(searchCapsule.value);
+          renderLearnSelector();
+          alert("Import successful!");
+        } else alert("Invalid JSON!");
+      } catch(err) {
+        alert("Error parsing JSON!");
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  //
