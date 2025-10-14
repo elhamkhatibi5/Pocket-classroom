@@ -78,6 +78,23 @@
       inset: 0;  
       z-index: -1; /* پشت تمام محتوا */  
     }  
+    /* ===== LIGHT MODE IMPROVEMENTS ===== */
+body.light-mode {
+  color: #222; /* متن اصلی قابل دید */
+}
+body.light-mode section {
+  border-color: rgba(0,0,0,0.1);
+}
+body.light-mode .flashcard {
+  background: #fff;
+  color: #000;
+}
+body.light-mode .hero-bg {
+  filter: brightness(0.6) blur(2px); /* روشن‌تر برای متن */
+}
+.card-text {
+  color: #333; /* متن کارت واضح شود */
+}
   </style>  </head>  
 <body class="light-mode">    <!-- Background Image -->    <div class="hero-bg"></div>    <!-- ===== NAVBAR ===== -->    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">  
     <div class="container-fluid">  
