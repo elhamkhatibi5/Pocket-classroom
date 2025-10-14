@@ -1,149 +1,113 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+  // ===== Shortcuts =====
   const $ = s => document.querySelector(s);
   const $$ = s => document.querySelectorAll(s);
 
-  // ===== Load Capsules =====
-  let storedCapsules = JSON.parse(localStorage.getItem("capsules"));
-  if(!storedCapsules || storedCapsules.length === 0){
-    // Add sample capsules if empty
-    storedCapsules = [
-      {
-        id: crypto.randomUUID(),
-        meta: { title: "Biology Basics", subject: "Biology", level: "Beginner", desc: "Intro to cells and life." },
-        notes: ["Cells are the basic unit of life.", "DNA contains genetic info.", "Photosynthesis occurs in chloroplasts."],
-        flashcards: [
-          { question: "Powerhouse of the cell?", options: ["Nucleus","Mitochondria","Ribosome"], answer: "Mitochondria" },
-          { question: "Which organelle contains DNA?", options: ["Nucleus","Mitochondria","Lysosome"], answer: "Nucleus" }
-        ],
-        quiz: [
-          { question: "Photosynthesis occurs in?", options: ["Chloroplast","Mitochondria","Nucleus"], answer: "Chloroplast" }
-        ]
-      },
-      {
-        id: crypto.randomUUID(),
-        meta: { title: "Basic Algebra", subject: "Math", level: "Beginner", desc: "Intro to algebra expressions." },
-        notes: ["Variables represent unknowns.", "Equations balance both sides.", "Simplify expressions to combine like terms."],
-        flashcards: [
-          { question: "Solve x+5=12. x=?", options: ["5","7","12"], answer: "7" },
-          { question: "Simplify 2x + 3x", options: ["5x","6x","x"], answer: "5x" }
-        ],
-        quiz: [
-          { question: "2(x+3) = ?", options: ["2x+3","2x+6","x+6"], answer: "2x+6" }
-        ]
-      }
-    ];
-    localStorage.setItem("capsules", JSON.stringify(storedCapsules));
-  }
-
-  let capsules = storedCapsules;
+  // ===== State =====
+  let capsules = [
+    {
+      id: crypto.randomUUID(),
+      meta: { title: "Biology Basics", subject: "Biology", level: "Beginner", desc: "Foundation of cells, plants, life." },
+      notes: ["Cells are building blocks of life.", "Photosynthesis creates food.", "Energy flows in food chains."],
+      flashcards: [
+        { q: "Basic unit of life?", a: "Cell" },
+        { q: "Process creating food in plants?", a: "Photosynthesis" }
+      ],
+      quiz: [
+        { q: "What is the basic unit of life?", options: ["Cell","Organ","Tissue"], correct: "Cell" },
+        { q: "Photosynthesis produces?", options: ["Food","Water","Air"], correct: "Food" }
+      ]
+    }
+  ];
   let currentCapsuleId = null;
-  let currentFlashIndex = 0;
-  let flashSide = "front";
+  let learnIndex = 0;
+  let flashcardFlipped = false;
 
-  // ===== Elements =====
+  // ===== DOM Elements =====
   const capsuleGrid = $("#capsuleGrid");
   const newCapsuleBtn = $("#newCapsuleBtn");
   const saveCapsuleBtn = $("#saveCapsuleBtn");
-  const searchCapsule = $("#searchCapsule");
-  const importInput = $("#importInput");
-  const exportBtn = $("#exportBtn");
-
+  const addFlashcardBtn = $("#addFlashcardBtn");
+  const addQuestionBtn = $("#addQuestionBtn");
   const titleInput = $("#titleInput");
   const subjectInput = $("#subjectInput");
   const levelInput = $("#levelInput");
   const descInput = $("#descInput");
-
   const notesInput = $("#notesInput");
   const flashcardsList = $("#flashcardsList");
-  const addFlashcardBtn = $("#addFlashcardBtn");
-
   const quizList = $("#quizList");
-  const addQuestionBtn = $("#addQuestionBtn");
-
   const learnSelector = $("#learnSelector");
   const notesList = $("#notesList");
   const flashcardDisplay = $("#flashcardDisplay");
   const prevCardBtn = $("#prevCardBtn");
-  const flipCardBtn = $("#flipCardBtn");
   const nextCardBtn = $("#nextCardBtn");
+  const flipCardBtn = $("#flipCardBtn");
   const quizContainer = $("#quizContainer");
 
-  // ===== Helpers =====
-  function saveToStorage() {
-    localStorage.setItem("capsules", JSON.stringify(capsules));
+  // ===== Utils =====
+  const saveToStorage = () => localStorage.setItem("capsules", JSON.stringify(capsules));
+  const loadFromStorage = () => {
+    const data = localStorage.getItem("capsules");
+    if(data) capsules = JSON.parse(data);
   }
 
-  function clearAuthorForm() {
-    currentCapsuleId = null;
-    titleInput.value = "";
-    subjectInput.value = "";
-    levelInput.value = "Beginner";
-    descInput.value = "";
-    notesInput.value = "";
-    flashcardsList.innerHTML = "";
-    quizList.innerHTML = "";
-  }
-
-  function renderLibrary(filter = "") {
+  // ===== Render Library =====
+  function renderLibrary() {
     capsuleGrid.innerHTML = "";
-    const filtered = capsules.filter(c => c.meta.title.toLowerCase().includes(filter.toLowerCase()));
-    if (filtered.length === 0) {
-      capsuleGrid.innerHTML = `<p class="text-muted">No capsules found.</p>`;
-      return;
-    }
-    filtered.forEach(c => {
+    capsules.forEach(c => {
       const col = document.createElement("div");
       col.className = "col-md-4";
       col.innerHTML = `
-        <div class="card shadow-sm h-100">
-          <div class="card-body d-flex flex-column">
+        <div class="card capsule-card shadow-sm">
+          <div class="card-body">
             <h5 class="card-title">${c.meta.title}</h5>
-            <p class="card-text mb-1"><strong>Subject:</strong> ${c.meta.subject}</p>
-            <p class="card-text mb-1"><strong>Level:</strong> ${c.meta.level}</p>
-            <p class="card-text text-truncate">${c.meta.desc}</p>
-            <div class="mt-auto d-flex justify-content-between">
-              <button class="btn btn-sm btn-primary view-btn"><i class="bi bi-eye"></i> Learn</button>
-              <button class="btn btn-sm btn-warning edit-btn"><i class="bi bi-pencil-square"></i> Edit</button>
-              <button class="btn btn-sm btn-danger del-btn"><i class="bi bi-trash"></i> Delete</button>
+            <p class="card-text text-muted">${c.meta.desc}</p>
+            <span class="badge bg-success">${c.meta.level}</span>
+            <div class="mt-3 text-end">
+              <button class="btn btn-outline-primary btn-sm learnBtn"><i class="bi bi-play-circle"></i> Learn</button>
+              <button class="btn btn-outline-secondary btn-sm editBtn"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-outline-danger btn-sm deleteBtn"><i class="bi bi-trash"></i></button>
             </div>
           </div>
-        </div>
-      `;
-      col.querySelector(".view-btn").addEventListener("click", () => selectLearn(c.id));
-      col.querySelector(".edit-btn").addEventListener("click", () => loadCapsuleToAuthor(c.id));
-      col.querySelector(".del-btn").addEventListener("click", () => {
-        if (confirm("Delete this capsule?")) {
-          capsules = capsules.filter(x => x.id !== c.id);
+        </div>`;
+      capsuleGrid.appendChild(col);
+
+      // Attach Event Listeners
+      col.querySelector(".editBtn").addEventListener("click", () => openEditCapsule(c.id));
+      col.querySelector(".deleteBtn").addEventListener("click", () => {
+        if(confirm("Delete this capsule?")) {
+          capsules = capsules.filter(cap => cap.id !== c.id);
           saveToStorage();
-          renderLibrary(searchCapsule.value);
+          renderLibrary();
           renderLearnSelector();
         }
       });
-      capsuleGrid.appendChild(col);
+      col.querySelector(".learnBtn").addEventListener("click", () => {
+        learnSelector.value = c.meta.title;
+        openLearn(c.id);
+        document.querySelector("#learn").scrollIntoView({behavior: "smooth"});
+      });
     });
   }
 
+  // ===== Render Learn Selector =====
   function renderLearnSelector() {
-    learnSelector.innerHTML = `<option value="">Select Capsule</option>`;
+    learnSelector.innerHTML = "";
     capsules.forEach(c => {
       const opt = document.createElement("option");
-      opt.value = c.id;
       opt.textContent = c.meta.title;
       learnSelector.appendChild(opt);
     });
   }
 
-  function selectLearn(id) {
-    learnSelector.value = id;
-    renderLearn(id);
-  }
-
-  function renderLearn(id) {
-    const c = capsules.find(c => c.id === id);
-    if (!c) return;
+  // ===== Open Learn =====
+  function openLearn(id) {
+    const c = capsules.find(x => x.id === id);
+    if(!c) return;
     currentCapsuleId = id;
-
+    learnIndex = 0;
+    flashcardFlipped = false;
     // Notes
     notesList.innerHTML = "";
     c.notes.forEach(n => {
@@ -152,51 +116,186 @@ document.addEventListener("DOMContentLoaded", () => {
       li.textContent = n;
       notesList.appendChild(li);
     });
-
     // Flashcards
-    currentFlashIndex = 0;
-    flashSide = "front";
-    renderFlashcard();
-
+    updateFlashcardDisplay();
     // Quiz
-    renderQuiz(c.quiz);
+    renderQuiz();
   }
 
-  function renderFlashcard() {
-    if (!currentCapsuleId) return;
-    const c = capsules.find(c => c.id === currentCapsuleId);
-    if (c.flashcards.length === 0) {
-      flashcardDisplay.textContent = "No flashcards";
+  // ===== Flashcard Controls =====
+  function updateFlashcardDisplay() {
+    const c = capsules.find(x => x.id === currentCapsuleId);
+    if(!c || c.flashcards.length===0) {
+      flashcardDisplay.textContent = "No Flashcards";
       return;
     }
-    const f = c.flashcards[currentFlashIndex];
-    flashcardDisplay.textContent = flashSide === "front" ? f.question : f.answer;
+    const card = c.flashcards[learnIndex];
+    flashcardDisplay.textContent = flashcardFlipped ? card.a : card.q;
   }
 
-  function nextFlash() {
-    if (!currentCapsuleId) return;
-    const c = capsules.find(c => c.id === currentCapsuleId);
-    if (c.flashcards.length === 0) return;
-    currentFlashIndex = (currentFlashIndex + 1) % c.flashcards.length;
-    flashSide = "front";
-    renderFlashcard();
+  prevCardBtn.addEventListener("click", () => {
+    const c = capsules.find(x => x.id === currentCapsuleId);
+    if(!c) return;
+    learnIndex = (learnIndex -1 + c.flashcards.length)%c.flashcards.length;
+    flashcardFlipped = false;
+    updateFlashcardDisplay();
+  });
+  nextCardBtn.addEventListener("click", () => {
+    const c = capsules.find(x => x.id === currentCapsuleId);
+    if(!c) return;
+    learnIndex = (learnIndex +1)%c.flashcards.length;
+    flashcardFlipped = false;
+    updateFlashcardDisplay();
+  });
+  flipCardBtn.addEventListener("click", () => {
+    flashcardFlipped = !flashcardFlipped;
+    updateFlashcardDisplay();
+  });
+  flashcardDisplay.addEventListener("click", () => {
+    flashcardFlipped = !flashcardFlipped;
+    updateFlashcardDisplay();
+  });
+
+  // ===== Quiz =====
+  function renderQuiz() {
+    const c = capsules.find(x => x.id === currentCapsuleId);
+    if(!c) return;
+    quizContainer.innerHTML = "";
+    c.quiz.forEach((q, idx) => {
+      const div = document.createElement("div");
+      div.className = "mb-3";
+      div.innerHTML = `<p><strong>Q${idx+1}:</strong> ${q.q}</p>`;
+      const btnDiv = document.createElement("div");
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "btn btn-outline-primary btn-sm me-2 mb-1";
+        btn.textContent = opt;
+        btn.addEventListener("click", () => {
+          if(opt === q.correct) {
+            btn.classList.add("btn-success");
+          } else {
+            btn.classList.add("btn-danger");
+          }
+          Array.from(btnDiv.children).forEach(b=>b.disabled=true);
+        });
+        btnDiv.appendChild(btn);
+      });
+      div.appendChild(btnDiv);
+      quizContainer.appendChild(div);
+    });
   }
 
-  function prevFlash() {
-    if (!currentCapsuleId) return;
-    const c = capsules.find(c => c.id === currentCapsuleId);
-    if (c.flashcards.length === 0) return;
-    currentFlashIndex = (currentFlashIndex -1 + c.flashcards.length) % c.flashcards.length;
-    flashSide = "front";
-    renderFlashcard();
+  // ===== New / Edit Capsule =====
+  newCapsuleBtn.addEventListener("click", () => {
+    currentCapsuleId = null;
+    titleInput.value = "";
+    subjectInput.value = "";
+    levelInput.value = "Beginner";
+    descInput.value = "";
+    notesInput.value = "";
+    flashcardsList.innerHTML = "";
+    quizList.innerHTML = "";
+  });
+
+  function openEditCapsule(id) {
+    const c = capsules.find(x=>x.id===id);
+    if(!c) return;
+    currentCapsuleId = id;
+    titleInput.value = c.meta.title;
+    subjectInput.value = c.meta.subject;
+    levelInput.value = c.meta.level;
+    descInput.value = c.meta.desc;
+    notesInput.value = c.notes.join("\n");
+    // Flashcards
+    flashcardsList.innerHTML = "";
+    c.flashcards.forEach((f, i) => {
+      const li = document.createElement("div");
+      li.className = "input-group mb-2";
+      li.innerHTML = `<input class="form-control form-control-sm flashQ" value="${f.q}" placeholder="Question">
+                      <input class="form-control form-control-sm flashA" value="${f.a}" placeholder="Answer">
+                      <button class="btn btn-outline-danger btn-sm removeFlash">X</button>`;
+      li.querySelector(".removeFlash").addEventListener("click", ()=>li.remove());
+      flashcardsList.appendChild(li);
+    });
+    // Quiz
+    quizList.innerHTML = "";
+    c.quiz.forEach((q,i)=>{
+      const li = document.createElement("div");
+      li.className = "input-group mb-2";
+      li.innerHTML = `<input class="form-control form-control-sm quizQ" value="${q.q}" placeholder="Question">
+                      <input class="form-control form-control-sm quizCorrect" value="${q.correct}" placeholder="Correct answer">
+                      <input class="form-control form-control-sm quizOptions" value="${q.options.join(",")}" placeholder="Options comma-separated">
+                      <button class="btn btn-outline-danger btn-sm removeQuiz">X</button>`;
+      li.querySelector(".removeQuiz").addEventListener("click", ()=>li.remove());
+      quizList.appendChild(li);
+    });
   }
 
-  function flipFlash() {
-    flashSide = flashSide === "front" ? "back" : "front";
-    renderFlashcard();
-  }
+  addFlashcardBtn.addEventListener("click", () => {
+    const li = document.createElement("div");
+    li.className = "input-group mb-2";
+    li.innerHTML = `<input class="form-control form-control-sm flashQ" placeholder="Question">
+                    <input class="form-control form-control-sm flashA" placeholder="Answer">
+                    <button class="btn btn-outline-danger btn-sm removeFlash">X</button>`;
+    li.querySelector(".removeFlash").addEventListener("click", ()=>li.remove());
+    flashcardsList.appendChild(li);
+  });
 
-  // ===== Initial Render =====
+  addQuestionBtn.addEventListener("click", () => {
+    const li = document.createElement("div");
+    li.className = "input-group mb-2";
+    li.innerHTML = `<input class="form-control form-control-sm quizQ" placeholder="Question">
+                    <input class="form-control form-control-sm quizCorrect" placeholder="Correct answer">
+                    <input class="form-control form-control-sm quizOptions" placeholder="Options comma-separated">
+                    <button class="btn btn-outline-danger btn-sm removeQuiz">X</button>`;
+    li.querySelector(".removeQuiz").addEventListener("click", ()=>li.remove());
+    quizList.appendChild(li);
+  });
+
+  // ===== Save Capsule =====
+  saveCapsuleBtn.addEventListener("click", () => {
+    const meta = {
+      title: titleInput.value.trim(),
+      subject: subjectInput.value.trim(),
+      level: levelInput.value,
+      desc: descInput.value.trim()
+    };
+    const notes = notesInput.value.split("\n").filter(n=>n.trim()!=="");
+    const flashcards = Array.from($$(".flashQ")).map((el,i)=>({q:el.value,a:$$(".flashA")[i].value}));
+    const quiz = Array.from($$(".quizQ")).map((el,i)=>({
+      q: el.value,
+      correct: $$(".quizCorrect")[i].value,
+      options: $$(".quizOptions")[i].value.split(",").map(x=>x.trim())
+    }));
+
+    if(currentCapsuleId){
+      // Edit
+      const c = capsules.find(x=>x.id===currentCapsuleId);
+      c.meta = meta;
+      c.notes = notes;
+      c.flashcards = flashcards;
+      c.quiz = quiz;
+    } else {
+      // New
+      capsules.push({id: crypto.randomUUID(), meta, notes, flashcards, quiz});
+    }
+
+    saveToStorage();
+    renderLibrary();
+    renderLearnSelector();
+    alert("Capsule saved successfully!");
+  });
+
+  // ===== Learn Selector Change =====
+  learnSelector.addEventListener("change", () => {
+    const title = learnSelector.value;
+    const c = capsules.find(x=>x.meta.title===title);
+    if(c) openLearn(c.id);
+  });
+
+  // ===== Initial Load =====
+  loadFromStorage();
   renderLibrary();
   renderLearnSelector();
+  if(capsules.length>0) openLearn(capsules[0].id);
 });
