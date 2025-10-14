@@ -78,22 +78,33 @@
       inset: 0;  
       z-index: -1; /* پشت تمام محتوا */  
     }  
-    /* ===== LIGHT MODE IMPROVEMENTS ===== */
+   /* ===== LIGHT MODE IMPROVEMENTS ===== */
 body.light-mode {
-  color: #222; /* متن اصلی قابل دید */
+  color: #111; /* متن اصلی تیره‌تر و واضح */
+  font-weight: 500; /* کمی پررنگ */
 }
+
 body.light-mode section {
-  border-color: rgba(0,0,0,0.1);
+  border-color: rgba(0,0,0,0.15);
 }
+
 body.light-mode .flashcard {
   background: #fff;
-  color: #000;
+  color: #111; /* متن داخل فلش‌کارت هم تیره‌تر */
+  font-weight: 500;
 }
+
 body.light-mode .hero-bg {
-  filter: brightness(0.6) blur(2px); /* روشن‌تر برای متن */
+  filter: brightness(0.55) blur(2px); /* پس‌زمینه روشن‌تر ولی مات */
 }
-.card-text {
-  color: #333; /* متن کارت واضح شود */
+
+body.light-mode .card-text {
+  color: #111; /* متن توضیحات کارت واضح شود */
+  font-weight: 500;
+}
+
+body.light-mode .badge {
+  opacity: 0.9; /* بهتر دیده شود */
 }
   </style>  </head>  
 <body class="light-mode">    <!-- Background Image -->    <div class="hero-bg"></div>    <!-- ===== NAVBAR ===== -->    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">  
