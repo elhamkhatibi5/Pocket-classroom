@@ -261,5 +261,216 @@
         ? '<i class="bi bi-brightness-high"></i> Light'  
         : '<i class="bi bi-moon-stars"></i> Dark';  
     });  
-  </script>  </body>  
+  </script>
+  <script>
+  // ====== DATA ======
+  let capsules = [
+    {
+      title: "Biology Basics",
+      subject: "Biology",
+      level: "Beginner",
+      description: "Learn the foundation of cells, plants, and life forms.",
+      notes: [
+        "Cells are the building blocks of life.",
+        "Photosynthesis creates food for plants.",
+        "Energy flows through food chains."
+      ],
+      flashcards: [
+        { question: "What is the powerhouse of the cell?", answer: "Mitochondria" },
+        { question: "What process do plants use to make food?", answer: "Photosynthesis" }
+      ],
+      quiz: [
+        { question: "What is the basic unit of life?", options: ["Cell", "Organ", "Tissue"], answer: "Cell" }
+      ]
+    },
+    {
+      title: "Math Geometry",
+      subject: "Math",
+      level: "Intermediate",
+      description: "Shapes, theorems, and geometry principles made simple.",
+      notes: ["Triangles have 3 sides.", "Pythagoras theorem."],
+      flashcards: [{ question: "Sum of angles in triangle?", answer: "180°" }],
+      quiz: [{ question: "A square has how many sides?", options: ["3", "4", "5"], answer: "4" }]
+    },
+    {
+      title: "English Grammar",
+      subject: "English",
+      level: "Beginner",
+      description: "Master sentence structure and tenses quickly.",
+      notes: ["A sentence has a subject and predicate.", "Tenses describe time."],
+      flashcards: [{ question: "What is the past tense of 'go'?", answer: "went" }],
+      quiz: [{ question: "Choose the correct form: She ____ happy.", options: ["is", "are", "am"], answer: "is" }]
+    }
+  ];
+
+  // ====== STATE ======
+  let currentCapsule = capsules[0];
+  let currentCardIndex = 0;
+  let showingAnswer = false;
+
+  const flashcardDisplay = document.getElementById("flashcardDisplay");
+  const prevCardBtn = document.getElementById("prevCardBtn");
+  const nextCardBtn = document.getElementById("nextCardBtn");
+  const flipCardBtn = document.getElementById("flipCardBtn");
+
+  const notesList = document.getElementById("notesList");
+  const learnSelector = document.getElementById("learnSelector");
+  const quizContainer = document.getElementById("quizContainer");
+
+  const flashcardsList = document.getElementById("flashcardsList");
+  const addFlashcardBtn = document.getElementById("addFlashcardBtn");
+  const quizList = document.getElementById("quizList");
+  const addQuestionBtn = document.getElementById("addQuestionBtn");
+
+  // ====== FUNCTIONS ======
+  function updateLearnMode() {
+    // Notes
+    notesList.innerHTML = "";
+    currentCapsule.notes.forEach(note => {
+      let li = document.createElement("li");
+      li.className = "list-group-item";
+      li.innerText = note;
+      notesList.appendChild(li);
+    });
+
+    // Flashcard display reset
+    currentCardIndex = 0;
+    showingAnswer = false;
+    showFlashcard();
+
+    // Quiz
+    renderQuiz();
+  }
+
+  function showFlashcard() {
+    if (!currentCapsule.flashcards.length) {
+      flashcardDisplay.innerText = "No flashcards";
+      return;
+    }
+    const card = currentCapsule.flashcards[currentCardIndex];
+    flashcardDisplay.innerText = showingAnswer ? card.answer : card.question;
+  }
+
+  function renderQuiz() {
+    if (!currentCapsule.quiz.length) {
+      quizContainer.innerHTML = "<p>No quiz questions</p>";
+      return;
+    }
+    const q = currentCapsule.quiz[0]; // فقط سوال اول برای نمایش
+    quizContainer.innerHTML = `<p><strong>Q1:</strong> ${q.question}</p>`;
+    const div = document.createElement("div");
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "btn btn-outline-primary btn-sm me-2";
+      btn.innerText = opt;
+      btn.addEventListener("click", () => {
+        if(opt === q.answer) alert("✅ Correct!");
+        else alert("❌ Wrong!");
+      });
+      div.appendChild(btn);
+    });
+    quizContainer.appendChild(div);
+  }
+
+  function populateAuthorFlashcards() {
+    flashcardsList.innerHTML = "";
+    currentCapsule.flashcards.forEach((fc, idx) => {
+      const div = document.createElement("div");
+      div.className = "list-group-item d-flex justify-content-between align-items-center";
+      div.innerText = `${fc.question} → ${fc.answer}`;
+      flashcardsList.appendChild(div);
+    });
+  }
+
+  function populateAuthorQuiz() {
+    quizList.innerHTML = "";
+    currentCapsule.quiz.forEach((q, idx) => {
+      const div = document.createElement("div");
+      div.className = "list-group-item d-flex justify-content-between align-items-center";
+      div.innerText = `${q.question} → ${q.answer}`;
+      quizList.appendChild(div);
+    });
+  }
+
+  function selectCapsule(title) {
+    currentCapsule = capsules.find(c => c.title === title);
+    // Update Learn Mode and Author
+    updateLearnMode();
+    populateAuthorFlashcards();
+    populateAuthorQuiz();
+    // Update selector
+    learnSelector.value = currentCapsule.title;
+  }
+
+  // ====== EVENTS ======
+  flashcardDisplay.addEventListener("click", () => {
+    showingAnswer = !showingAnswer;
+    showFlashcard();
+  });
+  flipCardBtn.addEventListener("click", () => {
+    showingAnswer = !showingAnswer;
+    showFlashcard();
+  });
+  prevCardBtn.addEventListener("click", () => {
+    currentCardIndex = (currentCardIndex - 1 + currentCapsule.flashcards.length) % currentCapsule.flashcards.length;
+    showingAnswer = false;
+    showFlashcard();
+  });
+  nextCardBtn.addEventListener("click", () => {
+    currentCardIndex = (currentCardIndex + 1) % currentCapsule.flashcards.length;
+    showingAnswer = false;
+    showFlashcard();
+  });
+
+  // Selector change
+  learnSelector.addEventListener("change", (e) => {
+    selectCapsule(e.target.value);
+  });
+
+  // Add Flashcard
+  addFlashcardBtn.addEventListener("click", () => {
+    const q = prompt("Enter flashcard question:");
+    if(!q) return;
+    const a = prompt("Enter flashcard answer:");
+    if(!a) return;
+    currentCapsule.flashcards.push({question: q, answer: a});
+    populateAuthorFlashcards();
+    updateLearnMode();
+  });
+
+  // Add Quiz Question
+  addQuestionBtn.addEventListener("click", () => {
+    const question = prompt("Enter quiz question:");
+    if(!question) return;
+    const answer = prompt("Enter correct answer:");
+    if(!answer) return;
+    const opts = prompt("Enter options separated by comma:").split(",");
+    currentCapsule.quiz.push({question, answer, options: opts});
+    populateAuthorQuiz();
+    updateLearnMode();
+  });
+
+  // Library buttons
+  document.querySelectorAll(".capsule-card").forEach(card => {
+    const title = card.querySelector(".card-title").innerText;
+    card.querySelector(".btn-outline-primary").addEventListener("click", () => selectCapsule(title));
+    card.querySelector(".btn-outline-secondary").addEventListener("click", () => {
+      alert("Editing " + title);
+      selectCapsule(title);
+      window.scrollTo({top: document.getElementById("author").offsetTop-70, behavior: "smooth"});
+    });
+    card.querySelector(".btn-outline-danger").addEventListener("click", () => {
+      if(confirm("Delete " + title + "?")) {
+        capsules = capsules.filter(c => c.title !== title);
+        card.parentElement.remove();
+      }
+    });
+  });
+
+  // Initial setup
+  populateAuthorFlashcards();
+  populateAuthorQuiz();
+  updateLearnMode();
+</script>
+</body>  
 </html>
