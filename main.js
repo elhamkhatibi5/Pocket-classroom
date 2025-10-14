@@ -3,13 +3,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const $ = s => document.querySelector(s);
   const $$ = s => document.querySelectorAll(s);
 
-  let capsules = JSON.parse(localStorage.getItem("capsules")) || [
+  // ===== Load Capsules or add samples if empty =====
+  let storedCapsules = JSON.parse(localStorage.getItem("capsules"));
+  let capsules = storedCapsules && storedCapsules.length > 0 ? storedCapsules : [
     {
       id: crypto.randomUUID(),
-      meta: { title: "Biology Basics", subject: "Biology", level: "Beginner", desc: "Introduction to cells and life." },
-      notes: ["Cells are the basic unit of life.", "DNA contains genetic information.", "Photosynthesis occurs in chloroplasts."],
+      meta: { title: "Biology Basics", subject: "Biology", level: "Beginner", desc: "Intro to cells and life." },
+      notes: ["Cells are the basic unit of life.", "DNA contains genetic info.", "Photosynthesis occurs in chloroplasts."],
       flashcards: [
-        { question: "What is the powerhouse of the cell?", options: ["Nucleus","Mitochondria","Ribosome"], answer: "Mitochondria" },
+        { question: "Powerhouse of the cell?", options: ["Nucleus","Mitochondria","Ribosome"], answer: "Mitochondria" },
         { question: "Which organelle contains DNA?", options: ["Nucleus","Mitochondria","Lysosome"], answer: "Nucleus" }
       ],
       quiz: [
@@ -18,20 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: crypto.randomUUID(),
-      meta: { title: "Basic Algebra", subject: "Math", level: "Beginner", desc: "Introduction to algebraic expressions." },
-      notes: ["Variables represent unknown values.", "Equations balance both sides.", "Simplify expressions to combine like terms."],
+      meta: { title: "Basic Algebra", subject: "Math", level: "Beginner", desc: "Intro to algebra expressions." },
+      notes: ["Variables represent unknowns.", "Equations balance both sides.", "Simplify expressions to combine like terms."],
       flashcards: [
-        { question: "Solve x + 5 = 12. x = ?", options: ["5","7","12"], answer: "7" },
+        { question: "Solve x+5=12. x=?", options: ["5","7","12"], answer: "7" },
         { question: "Simplify 2x + 3x", options: ["5x","6x","x"], answer: "5x" }
       ],
       quiz: [
-        { question: "2(x + 3) = ?", options: ["2x + 3","2x + 6","x + 6"], answer: "2x + 6" }
+        { question: "2(x+3) = ?", options: ["2x+3","2x+6","x+6"], answer: "2x+6" }
       ]
     },
     {
       id: crypto.randomUUID(),
-      meta: { title: "World History", subject: "History", level: "Intermediate", desc: "Key events of the 20th century." },
-      notes: ["WWI began in 1914.", "The Great Depression started in 1929.", "WWII ended in 1945."],
+      meta: { title: "World History", subject: "History", level: "Intermediate", desc: "20th century key events." },
+      notes: ["WWI began in 1914.", "Great Depression started in 1929.", "WWII ended in 1945."],
       flashcards: [
         { question: "When did WWI start?", options: ["1914","1918","1939"], answer: "1914" },
         { question: "When did WWII end?", options: ["1945","1939","1918"], answer: "1945" }
@@ -193,18 +195,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function addFlashcard() {
-    if (!currentCapsuleId) {
-      alert("Save capsule first!");
-      return;
-    }
+    if (!currentCapsuleId) return alert("Save capsule first!");
     const question = prompt("Enter flashcard question:");
     if (!question) return;
     const options = prompt("Enter options separated by comma:").split(",").map(s=>s.trim());
     if (options.length < 2) return alert("Need at least 2 options!");
     const answer = prompt(`Enter correct answer (must match one of options):`);
     if (!options.includes(answer)) return alert("Answer must be one of options!");
-    const flashcard = { question, options, answer };
-    capsules.find(c => c.id === currentCapsuleId).flashcards.push(flashcard);
+    capsules.find(c => c.id === currentCapsuleId).flashcards.push({ question, options, answer });
     saveToStorage();
     renderFlashcardsList(capsules.find(c => c.id === currentCapsuleId).flashcards);
   }
@@ -224,18 +222,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function addQuiz() {
-    if (!currentCapsuleId) {
-      alert("Save capsule first!");
-      return;
-    }
+    if (!currentCapsuleId) return alert("Save capsule first!");
     const question = prompt("Enter quiz question:");
     if (!question) return;
     const options = prompt("Enter options separated by comma:").split(",").map(s=>s.trim());
     if (options.length < 2) return alert("Need at least 2 options!");
     const answer = prompt(`Enter correct answer (must match one of options):`);
     if (!options.includes(answer)) return alert("Answer must be one of options!");
-    const quizItem = { question, options, answer };
-    capsules.find(c => c.id === currentCapsuleId).quiz.push(quizItem);
+    capsules.find(c => c.id === currentCapsuleId).quiz.push({ question, options, answer });
     saveToStorage();
     renderQuizList(capsules.find(c => c.id === currentCapsuleId).quiz);
   }
@@ -428,8 +422,4 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   });
 
-  // ===== Init =====
-  saveToStorage();
-  renderLibrary();
-  renderLearnSelector();
-});
+  //
