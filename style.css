@@ -1,149 +1,93 @@
 
-/* ===== Pocket Classroom Styles ===== */
-
-/* --- Base --- */
+/* ===== GENERAL STYLE ===== */
 body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: "Inter", "Segoe UI", sans-serif;
-  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: background 0.4s, color 0.4s;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  position: relative;
+  overflow-x: hidden;
+  background-color: #f5f5f5;
+  color: #222;
 }
 
-:root {
-  --bg: #f8f9fa;
-  --card-bg: #fff;
-  --text: #212529;
-  --border: #dee2e6;
+.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
 }
 
-body.dark-mode {
-  --bg: #121212;
-  --card-bg: #1e1e1e;
-  --text: #e9ecef;
-  --border: #333;
+/* ===== HERO BACKGROUND ===== */
+.hero-bg {
+  background-image: url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1950&q=80");
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.2) blur(2px);
+  position: fixed;
+  inset: 0;
+  z-index: -1;
 }
 
-/* --- Sections --- */
-.tab-section {
-  display: none;
+/* ===== SECTION ===== */
+section {
+  padding: 60px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 1;
 }
-.tab-section.active {
-  display: block;
-}
-
-.subtab,
-.learn-panel {
-  display: none;
-}
-.subtab.active,
-.learn-panel.active {
-  display: block;
+.dark-mode section {
+  border-color: rgba(255,255,255,0.15);
 }
 
-/* --- Navbar --- */
-.navbar-brand strong {
-  font-size: 1.1rem;
-  letter-spacing: 0.3px;
+/* ===== CAPSULE CARD ===== */
+.capsule-card {
+  transition: all 0.3s ease;
+}
+.capsule-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
-.navbar .nav-link.active {
-  font-weight: 600;
-  color: #0dcaf0 !important;
-}
-
-.navbar-dark .nav-link:hover {
-  color: #0dcaf0 !important;
-}
-
-/* --- Buttons & Cards --- */
-.btn {
-  border-radius: 0.5rem;
-}
-
-.card {
-  border-radius: 0.75rem;
-  background-color: var(--card-bg);
-  border: 1px solid var(--border);
-}
-
-/* --- Forms --- */
-.form-control,
-.form-select {
-  border-radius: 0.5rem;
-}
-
-/* --- Flashcard Display --- */
+/* ===== FLASHCARD ===== */
 .flashcard {
-  width: 300px;
-  height: 180px;
-  background-color: var(--card-bg);
-  color: var(--text);
-  border: 2px solid var(--border);
-  border-radius: 1rem;
+  width: 320px;
+  height: 200px;
+  border-radius: 12px;
+  background: #fff;
+  color: #000;
   display: flex;
-  justify-content: center;
   align-items: center;
-  perspective: 1000px;
-  font-size: 1.25rem;
+  justify-content: center;
+  font-size: 1.2rem;
   font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: transform 0.6s;
-  transform-style: preserve-3d;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  perspective: 1000px;
+  user-select: none;
+}
+.dark-mode .flashcard {
+  background: #1e1e1e;
+  color: #fff;
 }
 
-/* flipped state */
-.flashcard.flip {
-  transform: rotateY(180deg);
+/* ===== BUTTONS ===== */
+button:focus {
+  outline: none;
+  box-shadow: none !important;
 }
 
-.flashcard::before,
-.flashcard::after {
-  content: attr(data-text);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.flashcard::after {
-  transform: rotateY(180deg);
-  background-color: var(--card-bg);
-}
-
-/* --- Learn Tabs --- */
-.learn-panel input[type="text"] {
-  border-radius: 0.5rem;
-}
-
-/* --- Progress & States --- */
-.progress {
-  height: 6px;
-  border-radius: 3px;
-}
-
-/* --- Empty Library --- */
-#capsuleGrid .text-center {
-  background: var(--card-bg);
-  border: 2px dashed var(--border);
-  border-radius: 0.75rem;
-}
-
-/* --- Footer --- */
+/* ===== FOOTER ===== */
 footer {
-  background-color: var(--card-bg);
-  border-top: 1px solid var(--border);
-  margin-top: 3rem;
+  background: #f8f9fa;
+  position: relative;
+  z-index: 1;
+}
+.dark-mode footer {
+  background: #1a1a1a;
+  color: #aaa;
 }
 
-/* --- Responsive --- */
-@media (max-width: 576px) {
-  .flashcard {
-    width: 100%;
-    height: 150px;
-  }
+/* ===== FORM CONTROLS ===== */
+.input-group .form-control {
+  margin-right: 5px;
 }
