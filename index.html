@@ -5,260 +5,146 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pocket Classroom — Professional Edition</title>
-<!-- Bootstrap & Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
 <style>
-body {
-  transition: background 0.4s, color 0.4s;
-  min-height: 100vh;
-  scroll-behavior: smooth;
-  position: relative;
-  overflow-x: hidden;
-}
-.dark-mode {
-  background-color: #121212;
-  color: #f0f0f0;
-}
-section {
-  padding: 60px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  position: relative;
-  z-index: 1;
-}
-.dark-mode section {
-  border-color: rgba(255,255,255,0.15);
-}
-.capsule-card {
-  transition: all 0.3s ease;
-}
-.capsule-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-}
-.flashcard {
-  width: 320px;
-  height: 200px;
-  border-radius: 12px;
-  background: #fff;
-  color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  font-weight: 500;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: transform 0.6s;
-  perspective: 1000px;
-}
-.dark-mode .flashcard {
-  background: #1e1e1e;
-  color: #fff;
-}
-footer {
-  background: #f8f9fa;
-  position: relative;
-  z-index: 1;
-}
-.dark-mode footer {
-  background: #1a1a1a;
-  color: #aaa;
-}
-.hero-bg {
-  background-image: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.2) blur(2px);
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-}
-body.light-mode {
-  color: #111;
-  font-weight: 500;
-}
-body.light-mode section { border-color: rgba(0,0,0,0.15);}
-body.light-mode .flashcard { background: #fff; color: #111; font-weight:500;}
-body.light-mode .hero-bg { filter: brightness(0.55) blur(2px);}
-body.light-mode .card-text { color:#111; font-weight:500;}
-body.light-mode .badge { opacity:0.9;}
-body.dark-mode input, body.dark-mode textarea, body.dark-mode select, body.dark-mode .form-control, body.dark-mode .form-select { background-color:#2a2a2a; color:#fff; border-color:#444;}
-body.dark-mode textarea::placeholder, body.dark-mode input::placeholder { color:#ccc; }
-body.dark-mode .list-group-item { background-color:#1f1f1f; color:#fff; }
-body.dark-mode .flashcard { background-color:#1e1e1e; color:#fff; }
+  body {transition: background 0.4s, color 0.4s; min-height: 100vh; scroll-behavior: smooth;}
+  .dark-mode {background:#121212;color:#f0f0f0;}
+  section {padding:60px 0;border-bottom:1px solid rgba(0,0,0,0.1);}
+  .dark-mode section {border-color: rgba(255,255,255,0.15);}
+  .capsule-card {transition:all 0.3s ease;}
+  .capsule-card:hover {transform:translateY(-4px); box-shadow:0 6px 18px rgba(0,0,0,0.15);}
+  .flashcard {width:320px;height:200px;border-radius:12px;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,0.1);cursor:pointer;transition:transform 0.6s;perspective:1000px;}
+  .dark-mode .flashcard {background:#1e1e1e;color:#fff;}
+  .hero-bg {background-image:url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");background-size:cover;background-position:center;filter:brightness(0.2) blur(2px);position:fixed;inset:0;z-index:-1;}
+  footer {background:#f8f9fa;position:relative;z-index:1;}
+  .dark-mode footer {background:#1a1a1a;color:#aaa;}
 </style>
 </head>
 <body class="light-mode">
+
 <div class="hero-bg"></div>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
-<div class="container-fluid">
-<a class="navbar-brand d-flex align-items-center" href="#">
-<i class="bi bi-mortarboard-fill me-2 fs-4 text-warning"></i><strong>Pocket Classroom</strong>
-</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarNav">
-<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<li class="nav-item"><a class="nav-link" href="#library"><i class="bi bi-journal-bookmark"></i> Library</a></li>
-<li class="nav-item"><a class="nav-link" href="#author"><i class="bi bi-pencil-square"></i> Author</a></li>
-<li class="nav-item"><a class="nav-link" href="#learn"><i class="bi bi-lightbulb"></i> Learn</a></li>
-</ul>
-<button id="themeToggle" class="btn btn-outline-light btn-sm"><i class="bi bi-moon-stars"></i> Dark</button>
-</div>
-</div>
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <i class="bi bi-mortarboard-fill me-2 fs-4 text-warning"></i>
+      <strong>Pocket Classroom</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#library"><i class="bi bi-journal-bookmark"></i> Library</a></li>
+        <li class="nav-item"><a class="nav-link" href="#author"><i class="bi bi-pencil-square"></i> Author</a></li>
+        <li class="nav-item"><a class="nav-link" href="#learn"><i class="bi bi-lightbulb"></i> Learn</a></li>
+      </ul>
+      <button id="themeToggle" class="btn btn-outline-light btn-sm"><i class="bi bi-moon-stars"></i> Dark</button>
+    </div>
+  </div>
 </nav>
 
 <main class="container mt-5 pt-5">
 
-<!-- LIBRARY -->
 <section id="library">
-<div class="d-flex justify-content-between align-items-center mb-3">
-<h3><i class="bi bi-journal-text text-primary"></i> Your Capsules</h3>
-<div>
-<button id="newCapsuleBtn" class="btn btn-success me-2"><i class="bi bi-plus-circle"></i> New Capsule</button>
-<label class="btn btn-outline-primary mb-0 me-2">
-<i class="bi bi-upload"></i> Import JSON
-<input type="file" id="importInput" hidden accept=".json">
-</label>
-<button class="btn btn-outline-info" id="exportBtn"><i class="bi bi-download"></i> Export JSON</button>
-</div>
-</div>
-<input type="text" id="searchCapsule" class="form-control mb-4" placeholder="Search capsules...">
-<div id="capsuleGrid" class="row g-3"></div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3><i class="bi bi-journal-text text-primary"></i> Your Capsules</h3>
+    <div>
+      <button id="newCapsuleBtn" class="btn btn-success me-2"><i class="bi bi-plus-circle"></i> New Capsule</button>
+    </div>
+  </div>
+  <input type="text" id="searchCapsule" class="form-control mb-4" placeholder="Search capsules...">
+  <div id="capsuleGrid" class="row g-3"></div>
 </section>
 
-<!-- AUTHOR -->
 <section id="author">
-<h3 class="mb-3"><i class="bi bi-pencil-square text-warning"></i> Create or Edit Capsule</h3>
-<form id="metaForm" class="card p-3 shadow-sm mb-4">
-<div class="row g-3">
-<div class="col-md-6">
-<label class="form-label">Title</label>
-<input type="text" id="titleInput" class="form-control" placeholder="Enter capsule title">
-</div>
-<div class="col-md-3">
-<label class="form-label">Subject</label>
-<input type="text" id="subjectInput" class="form-control" placeholder="e.g. Biology">
-</div>
-<div class="col-md-3">
-<label class="form-label">Level</label>
-<select id="levelInput" class="form-select">
-<option>Beginner</option>
-<option>Intermediate</option>
-<option>Advanced</option>
-</select>
-</div>
-</div>
-<div class="mt-3">
-<label class="form-label">Description</label>
-<textarea id="descInput" class="form-control" rows="2" placeholder="Short description..."></textarea>
-</div>
-</form>
+  <h3 class="mb-3"><i class="bi bi-pencil-square text-warning"></i> Create or Edit Capsule</h3>
+  <form id="metaForm" class="card p-3 shadow-sm mb-4">
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label">Title</label><input type="text" id="titleInput" class="form-control" placeholder="Enter capsule title"></div>
+      <div class="col-md-3"><label class="form-label">Subject</label><input type="text" id="subjectInput" class="form-control" placeholder="e.g. Biology"></div>
+      <div class="col-md-3"><label class="form-label">Level</label><select id="levelInput" class="form-select"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div>
+    </div>
+    <div class="mt-3">
+      <label class="form-label">Description</label>
+      <textarea id="descInput" class="form-control" rows="2" placeholder="Short description..."></textarea>
+    </div>
+  </form>
 
-<div class="mb-3">
-<h5><i class="bi bi-sticky"></i> Notes</h5>
-<textarea id="notesInput" class="form-control mb-3" rows="5" placeholder="Write each note on a new line..."></textarea>
+  <div class="mb-3">
+    <h5><i class="bi bi-sticky"></i> Notes</h5>
+    <textarea id="notesInput" class="form-control mb-3" rows="5" placeholder="Write each note on a new line..."></textarea>
 
-<h5><i class="bi bi-card-text"></i> Flashcards</h5>
-<div id="flashcardsList" class="list-group mb-3"></div>
-<button id="addFlashcardBtn" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-circle"></i> Add Flashcard</button>
+    <h5><i class="bi bi-card-text"></i> Flashcards</h5>
+    <div id="flashcardsList" class="list-group mb-3"></div>
+    <button id="addFlashcardBtn" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-circle"></i> Add Flashcard</button>
 
-<h5 class="mt-4"><i class="bi bi-question-circle"></i> Quiz Questions</h5>
-<div id="quizList" class="list-group mb-3"></div>
-<button id="addQuestionBtn" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-circle"></i> Add Question</button>
-</div>
+    <h5 class="mt-4"><i class="bi bi-question-circle"></i> Quiz Questions</h5>
+    <div id="quizList" class="list-group mb-3"></div>
+    <button id="addQuestionBtn" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-circle"></i> Add Question</button>
+  </div>
 
-<div class="text-end">
-<button id="saveCapsuleBtn" class="btn btn-success"><i class="bi bi-save"></i> Save Capsule</button>
-</div>
+  <div class="text-end">
+    <button id="saveCapsuleBtn" class="btn btn-success"><i class="bi bi-save"></i> Save Capsule</button>
+  </div>
 </section>
 
-<!-- LEARN -->
 <section id="learn">
-<h3 class="mb-3"><i class="bi bi-lightbulb text-info"></i> Learn Mode</h3>
-<select id="learnSelector" class="form-select w-auto mb-3"></select>
+  <h3 class="mb-3"><i class="bi bi-lightbulb text-info"></i> Learn Mode</h3>
+  <select id="learnSelector" class="form-select w-auto mb-3"></select>
 
-<div id="learn-notes" class="mb-4">
-<h5><i class="bi bi-journal"></i> Notes</h5>
-<ol id="notesList" class="list-group list-group-numbered"></ol>
-</div>
+  <div id="learn-notes" class="mb-4">
+    <h5><i class="bi bi-journal"></i> Notes</h5>
+    <ol id="notesList" class="list-group list-group-numbered"></ol>
+  </div>
 
-<div id="learn-flashcards" class="text-center mb-4">
-<h5><i class="bi bi-card-text"></i> Flashcards <span id="flashcardProgress" class="badge bg-info"></span></h5>
-<div id="flashcardDisplay" class="flashcard mx-auto my-3">Click to Flip</div>
-<div class="d-flex justify-content-center gap-2">
-<button id="prevCardBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i></button>
-<button id="flipCardBtn" class="btn btn-warning btn-sm"><i class="bi bi-arrow-repeat"></i></button>
-<button id="nextCardBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-right"></i></button>
-</div>
-</div>
+  <div id="learn-flashcards" class="text-center mb-4">
+    <h5><i class="bi bi-card-text"></i> Flashcards</h5>
+    <div id="flashcardDisplay" class="flashcard mx-auto my-3">Click to Flip</div>
+    <div class="d-flex justify-content-center gap-2">
+      <button id="prevCardBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i></button>
+      <button id="flipCardBtn" class="btn btn-warning btn-sm"><i class="bi bi-arrow-repeat"></i></button>
+      <button id="nextCardBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-right"></i></button>
+    </div>
+  </div>
 
-<div id="learn-quiz">
-<h5><i class="bi bi-patch-question"></i> Quiz <span id="quizProgress" class="badge bg-success"></span></h5>
-<div id="quizContainer" class="card p-3 shadow-sm"></div>
-</div>
+  <div id="learn-quiz">
+    <h5><i class="bi bi-patch-question"></i> Quiz</h5>
+    <div id="quizContainer" class="card p-3 shadow-sm"></div>
+  </div>
 </section>
 
 </main>
-
 <footer class="text-center py-3 mt-4 border-top text-muted">
-<small>© 2025 Pocket Classroom — Offline Learning</small>
+  <small>© 2025 Pocket Classroom — Offline Learning</small>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-// ===== Dark Mode Toggle =====
 const themeToggle = document.getElementById('themeToggle');
 themeToggle.addEventListener('click', () => {
-document.body.classList.toggle('dark-mode');
-themeToggle.innerHTML = document.body.classList.contains('dark-mode')
-? '<i class="bi bi-brightness-high"></i> Light'
-: '<i class="bi bi-moon-stars"></i> Dark';
+  document.body.classList.toggle('dark-mode');
+  themeToggle.innerHTML = document.body.classList.contains('dark-mode')
+    ? '<i class="bi bi-brightness-high"></i> Light'
+    : '<i class="bi bi-moon-stars"></i> Dark';
 });
 
-// ====== DATA ======
+// ===== DATA =====
 let capsules = [
-{title:"Biology Basics",subject:"Biology",level:"Beginner",description:"Learn the foundation of cells, plants, and life forms.",
-notes:["Cells are the building blocks of life.","Photosynthesis creates food for plants.","Energy flows through food chains."],
-flashcards:[{question:"What is the powerhouse of the cell?",answer:"Mitochondria"},{question:"What process do plants use to make food?",answer:"Photosynthesis"},{question:"Basic unit of life?",answer:"Cell"}],
-quiz:[{question:"What is the basic unit of life?",options:["Cell","Organ","Tissue"],answer:"Cell"},{question:"Plants make food by?",options:["Photosynthesis","Respiration","Diffusion"],answer:"Photosynthesis"}]},
-{title:"Math Geometry",subject:"Math",level:"Intermediate",description:"Shapes, theorems, and geometry principles made simple.",
-notes:["Triangles have 3 sides.","Pythagoras theorem.","Circles have pi."],
-flashcards:[{question:"Sum of angles in triangle?",answer:"180°"},{question:"Right angle value?",answer:"90°"},{question:"Pythagoras formula?",answer:"a²+b²=c²"}],
-quiz:[{question:"A square has how many sides?",options:["3","4","5"],answer:"4"},{question:"Sum of angles in triangle?",options:["180","90","360"],answer:"180"}]},
-{title:"English Grammar",subject:"English",level:"Beginner",description:"Master sentence structure and tenses quickly.",
-notes:["A sentence has subject and predicate.","Tenses describe time.","Articles define nouns."],
-flashcards:[{question:"Past tense of 'go'?",answer:"went"},{question:"Plural of 'child'?",answer:"children"},{question:"Correct article for 'apple'?",answer:"an"}],
-quiz:[{question:"Choose correct: She ____ happy.",options:["is","are","am"],answer:"is"}]},
-{title:"Physics Fundamentals",subject:"Physics",level:"Intermediate",description:"Basic physics concepts explained.",
-notes:["Force equals mass times acceleration.","Energy cannot be created or destroyed.","Gravity attracts objects."],
-flashcards:[{question:"Newton's 2nd law?",answer:"F=ma"},{question:"Speed formula?",answer:"distance/time"}],
-quiz:[{question:"Unit of force?",options:["Newton","Joule","Watt"],answer:"Newton"}]},
-{title:"History World",subject:"History",level:"Advanced",description:"Major events in world history.",
-notes:["WWII ended in 1945.","French Revolution began 1789.","Industrial revolution transformed economies."],
-flashcards:[{question:"Year WWII ended?",answer:"1945"},{question:"Start of French Revolution?",answer:"1789"}],
-quiz:[{question:"Year of Industrial Revolution?",options:["1760","1800","1900"],answer:"1760"}]},
-{title:"Chemistry Basics",subject:"Chemistry",level:"Beginner",description:"Introduction to atoms and molecules.",
-notes:["Atom is smallest unit of element.","Water is H2O.","Periodic table lists elements."],
-flashcards:[{question:"H2O is?",answer:"Water"},{question:"Smallest element unit?",answer:"Atom"}],
-quiz:[{question:"Periodic table lists?",options:["Elements","Compounds","Mixtures"],answer:"Elements"}]},
-{title:"Computer Science",subject:"CS",level:"Intermediate",description:"Learn programming and algorithms.",
-notes:["Algorithm is a set of instructions.","Variables store data.","Loops repeat actions."],
-flashcards:[{question:"Language for web?",answer:"JavaScript"},{question:"Loop type?",answer:"for, while"}],
-quiz:[{question:"Data storage?",options:["Variable","Function","Loop"],answer:"Variable"}]}
+  {title:"Biology Basics",subject:"Biology",level:"Beginner",description:"Learn the foundation of cells, plants, and life forms.",notes:["Cells are the building blocks of life.","Photosynthesis creates food for plants.","Energy flows through food chains."],flashcards:[{question:"What is the powerhouse of the cell?",answer:"Mitochondria"},{question:"What process do plants use to make food?",answer:"Photosynthesis"}],quiz:[{question:"What is the basic unit of life?",options:["Cell","Organ","Tissue"],answer:"Cell"}]},
+  {title:"Math Geometry",subject:"Math",level:"Intermediate",description:"Shapes, theorems, and geometry principles made simple.",notes:["Triangles have 3 sides.","Pythagoras theorem."],flashcards:[{question:"Sum of angles in triangle?",answer:"180°"}],quiz:[{question:"A square has how many sides?",options:["3","4","5"],answer:"4"}]},
+  {title:"English Grammar",subject:"English",level:"Beginner",description:"Master sentence structure and tenses quickly.",notes:["A sentence has a subject and predicate.","Tenses describe time."],flashcards:[{question:"What is the past tense of 'go'?",answer:"went"}],quiz:[{question:"Choose the correct form: She ____ happy.",options:["is","are","am"],answer:"is"}]},
+  {title:"Physics Fundamentals",subject:"Physics",level:"Intermediate",description:"Basic physics concepts like motion and forces.",notes:["Newton's laws of motion.","Energy and work."],flashcards:[{question:"Force = ?",answer:"Mass x Acceleration"}],quiz:[{question:"Who formulated the laws of motion?",options:["Newton","Einstein","Galileo"],answer:"Newton"}]},
+  {title:"World History",subject:"History",level:"Advanced",description:"Important events in world history.",notes:["WWII started in 1939.","Industrial Revolution."],flashcards:[{question:"When did WWII start?",answer:"1939"}],quiz:[{question:"Who discovered America?",options:["Columbus","Magellan","Cook"],answer:"Columbus"}]}
 ];
 
+// ===== STATE =====
 let currentCapsule = capsules[0];
 let currentCardIndex = 0;
 let showingAnswer = false;
-let currentQuizIndex = 0;
 
+// ===== ELEMENTS =====
 const flashcardDisplay = document.getElementById("flashcardDisplay");
 const prevCardBtn = document.getElementById("prevCardBtn");
 const nextCardBtn = document.getElementById("nextCardBtn");
@@ -270,192 +156,155 @@ const flashcardsList = document.getElementById("flashcardsList");
 const addFlashcardBtn = document.getElementById("addFlashcardBtn");
 const quizList = document.getElementById("quizList");
 const addQuestionBtn = document.getElementById("addQuestionBtn");
-const titleInput = document.getElementById("titleInput");
-const subjectInput = document.getElementById("subjectInput");
-const levelInput = document.getElementById("levelInput");
-const descInput = document.getElementById("descInput");
-const notesInput = document.getElementById("notesInput");
-const saveCapsuleBtn = document.getElementById("saveCapsuleBtn");
 const capsuleGrid = document.getElementById("capsuleGrid");
-const flashcardProgress = document.getElementById("flashcardProgress");
-const quizProgress = document.getElementById("quizProgress");
+const newCapsuleBtn = document.getElementById("newCapsuleBtn");
 
-// ====== FUNCTIONS ======
+// ===== FUNCTIONS =====
 function renderLibrary() {
-capsuleGrid.innerHTML = "";
-capsules.forEach(c => {
-let col = document.createElement("div");
-col.className = "col-md-4";
-col.innerHTML = `
-<div class="card capsule-card shadow-sm">
-<div class="card-body">
-<h5 class="card-title">${c.title}</h5>
-<p class="card-text text-muted">${c.description}</p>
-<span class="badge bg-info">${c.level}</span>
-<div class="mt-3 text-end">
-<button class="btn btn-outline-primary btn-sm learn-btn"><i class="bi bi-play-circle"></i> Learn</button>
-<button class="btn btn-outline-secondary btn-sm edit-btn"><i class="bi bi-pencil"></i></button>
-<button class="btn btn-outline-danger btn-sm delete-btn"><i class="bi bi-trash"></i></button>
-</div>
-</div></div>`;
-capsuleGrid.appendChild(col);
+  capsuleGrid.innerHTML = "";
+  capsules.forEach(c => {
+    const div = document.createElement("div");
+    div.className="col-md-4";
+    div.innerHTML=`<div class="card capsule-card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">${c.title}</h5>
+        <p class="card-text text-muted">${c.description}</p>
+        <span class="badge ${c.level==="Beginner"?"bg-success":c.level==="Intermediate"?"bg-warning":"bg-danger"}">${c.level}</span>
+        <div class="mt-3 text-end">
+          <button class="btn btn-outline-primary btn-sm learnBtn"><i class="bi bi-play-circle"></i> Learn</button>
+          <button class="btn btn-outline-secondary btn-sm editBtn"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-outline-danger btn-sm delBtn"><i class="bi bi-trash"></i></button>
+        </div>
+      </div>
+    </div>`;
+    capsuleGrid.appendChild(div);
 
-// Events
-col.querySelector(".learn-btn").addEventListener("click", ()=>{ selectCapsule(c.title); scrollToLearn(); });
-col.querySelector(".edit-btn").addEventListener("click", ()=>{ selectCapsule(c.title); scrollToAuthor(); });
-col.querySelector(".delete-btn").addEventListener("click", ()=>{
-if(confirm(`Delete ${c.title}?`)){ capsules = capsules.filter(x=>x.title!==c.title); renderLibrary(); populateLearnSelector(); selectCapsule(capsules[0].title);}
-});
-});
+    div.querySelector(".learnBtn").addEventListener("click",()=>{selectCapsule(c.title)});
+    div.querySelector(".editBtn").addEventListener("click",()=>{
+      selectCapsule(c.title);
+      window.scrollTo({top: document.getElementById("author").offsetTop-70, behavior: "smooth"});
+    });
+    div.querySelector(".delBtn").addEventListener("click",()=>{
+      if(confirm(`Delete ${c.title}?`)){
+        capsules = capsules.filter(cp=>cp.title!==c.title);
+        renderLibrary();
+        populateLearnSelector();
+      }
+    });
+  });
 }
 
-function scrollToLearn(){ window.scrollTo({top: document.getElementById("learn").offsetTop-70, behavior:"smooth"});}
-function scrollToAuthor(){ window.scrollTo({top: document.getElementById("author").offsetTop-70, behavior:"smooth"});}
-
-function populateLearnSelector(){
-learnSelector.innerHTML = "";
-capsules.forEach(c=>{
-let opt = document.createElement("option"); opt.value=c.title; opt.innerText=c.title;
-learnSelector.appendChild(opt);
-});
-learnSelector.value = currentCapsule.title;
+function populateLearnSelector() {
+  learnSelector.innerHTML="";
+  capsules.forEach(c=>{const opt=document.createElement("option");opt.value=c.title;opt.innerText=c.title;learnSelector.appendChild(opt);});
 }
 
-function selectCapsule(title){
-currentCapsule = capsules.find(c=>c.title===title);
-currentCardIndex=0; showingAnswer=false; currentQuizIndex=0;
-updateLearnMode(); populateAuthor();
-}
+function updateLearnMode() {
+  // Notes
+  notesList.innerHTML = "";
+  currentCapsule.notes.forEach(note=>{
+    const li=document.createElement("li");
+    li.className="list-group-item";
+    li.innerText=note;
+    notesList.appendChild(li);
+  });
 
-function updateLearnMode(){
-notesList.innerHTML=""; currentCapsule.notes.forEach(n=>{let li=document.createElement("li"); li.className="list-group-item"; li.innerText=n; notesList.appendChild(li);});
-showFlashcard(); showQuiz();
-updateProgress();
+  currentCardIndex=0; showingAnswer=false; showFlashcard();
+  renderQuiz();
+  populateAuthorFlashcards(); populateAuthorQuiz();
+  learnSelector.value=currentCapsule.title;
 }
 
 function showFlashcard(){
-if(!currentCapsule.flashcards.length){ flashcardDisplay.innerText="No flashcards"; flashcardProgress.innerText=""; return;}
-const card = currentCapsule.flashcards[currentCardIndex];
-flashcardDisplay.innerText = showingAnswer?card.answer:card.question;
-flashcardProgress.innerText = `${currentCardIndex+1}/${currentCapsule.flashcards.length}`;
+  if(!currentCapsule.flashcards.length){flashcardDisplay.innerText="No flashcards";return;}
+  const card=currentCapsule.flashcards[currentCardIndex];
+  flashcardDisplay.innerText=showingAnswer?card.answer:card.question;
 }
 
-function showQuiz(){
-if(!currentCapsule.quiz.length){ quizContainer.innerHTML="<p>No quiz questions</p>"; quizProgress.innerText=""; return;}
-const q = currentCapsule.quiz[currentQuizIndex];
-quizContainer.innerHTML = `<p><strong>Q${currentQuizIndex+1}:</strong> ${q.question}</p>`;
-const div=document.createElement("div");
-q.options.forEach(opt=>{
-let btn=document.createElement("button");
-btn.className=btn-outline-primary btn-sm me-2";
-btn.innerText = opt;
-btn.addEventListener("click", ()=>{
-if(opt === q.answer) alert("✅ Correct!"); else alert("❌ Wrong!");
-currentQuizIndex = (currentQuizIndex + 1) % currentCapsule.quiz.length;
-showQuiz();
-updateProgress();
-});
-div.appendChild(btn);
-});
-quizContainer.appendChild(div);
-quizProgress.innerText = `${currentQuizIndex+1}/${currentCapsule.quiz.length}`;
-}
-
-function updateProgress(){
-flashcardProgress.innerText = currentCapsule.flashcards.length? `${currentCardIndex+1}/${currentCapsule.flashcards.length}` : "";
-quizProgress.innerText = currentCapsule.quiz.length? `${currentQuizIndex+1}/${currentCapsule.quiz.length}` : "";
-}
-
-// AUTHOR POPULATE
-function populateAuthor(){
-titleInput.value=currentCapsule.title;
-subjectInput.value=currentCapsule.subject;
-levelInput.value=currentCapsule.level;
-descInput.value=currentCapsule.description;
-notesInput.value=currentCapsule.notes.join("\n");
-populateAuthorFlashcards();
-populateAuthorQuiz();
+function renderQuiz(){
+  quizContainer.innerHTML="";
+  if(!currentCapsule.quiz.length){quizContainer.innerHTML="<p>No quiz questions</p>";return;}
+  currentCapsule.quiz.forEach((q,idx)=>{
+    const card=document.createElement("div");
+    card.className="mb-2";
+    card.innerHTML=`<p><strong>Q${idx+1}:</strong> ${q.question}</p>`;
+    const div=document.createElement("div");
+    q.options.forEach(opt=>{
+      const btn=document.createElement("button");
+      btn.className="btn btn-outline-primary btn-sm me-2";
+      btn.innerText=opt;
+      btn.addEventListener("click",()=>{alert(opt===q.answer?"✅ Correct!":"❌ Wrong!");});
+      div.appendChild(btn);
+    });
+    card.appendChild(div);
+    quizContainer.appendChild(card);
+  });
 }
 
 function populateAuthorFlashcards(){
-flashcardsList.innerHTML="";
-currentCapsule.flashcards.forEach(fc=>{
-let div=document.createElement("div");
-div.className="list-group-item d-flex justify-content-between align-items-center";
-div.innerText = `${fc.question} → ${fc.answer}`;
-flashcardsList.appendChild(div);
-});
+  flashcardsList.innerHTML="";
+  currentCapsule.flashcards.forEach(fc=>{
+    const div=document.createElement("div");
+    div.className="list-group-item";
+    div.innerText=`${fc.question} → ${fc.answer}`;
+    flashcardsList.appendChild(div);
+  });
 }
 
 function populateAuthorQuiz(){
-quizList.innerHTML="";
-currentCapsule.quiz.forEach(q=>{
-let div=document.createElement("div");
-div.className="list-group-item d-flex justify-content-between align-items-center";
-div.innerText = `${q.question} → ${q.answer}`;
-quizList.appendChild(div);
-});
+  quizList.innerHTML="";
+  currentCapsule.quiz.forEach(q=>{
+    const div=document.createElement("div");
+    div.className="list-group-item";
+    div.innerText=`${q.question} → ${q.answer}`;
+    quizList.appendChild(div);
+  });
 }
 
-// EVENTS
-flashcardDisplay.addEventListener("click", ()=>{
-showingAnswer = !showingAnswer; showFlashcard();
-});
-flipCardBtn.addEventListener("click", ()=>{
-showingAnswer = !showingAnswer; showFlashcard();
-});
-prevCardBtn.addEventListener("click", ()=>{
-currentCardIndex = (currentCardIndex - 1 + currentCapsule.flashcards.length) % currentCapsule.flashcards.length;
-showingAnswer=false; showFlashcard();
-});
-nextCardBtn.addEventListener("click", ()=>{
-currentCardIndex = (currentCardIndex + 1) % currentCapsule.flashcards.length;
-showingAnswer=false; showFlashcard();
-});
+function selectCapsule(title){
+  currentCapsule=capsules.find(c=>c.title===title);
+  updateLearnMode();
+}
 
-// Learn Selector
-learnSelector.addEventListener("change",(e)=>{ selectCapsule(e.target.value); });
+// ===== EVENTS =====
+flashcardDisplay.addEventListener("click",()=>{showingAnswer=!showingAnswer;showFlashcard();});
+flipCardBtn.addEventListener("click",()=>{showingAnswer=!showingAnswer;showFlashcard();});
+prevCardBtn.addEventListener("click",()=>{currentCardIndex=(currentCardIndex-1+currentCapsule.flashcards.length)%currentCapsule.flashcards.length; showingAnswer=false; showFlashcard();});
+nextCardBtn.addEventListener("click",()=>{currentCardIndex=(currentCardIndex+1)%currentCapsule.flashcards.length; showingAnswer=false; showFlashcard();});
+learnSelector.addEventListener("change",(e)=>{selectCapsule(e.target.value);});
 
-// Add Flashcard
 addFlashcardBtn.addEventListener("click",()=>{
-let q=prompt("Enter flashcard question:"); if(!q) return;
-let a=prompt("Enter flashcard answer:"); if(!a) return;
-currentCapsule.flashcards.push({question:q,answer:a});
-populateAuthorFlashcards(); updateLearnMode(); renderLibrary(); populateLearnSelector();
+  const q=prompt("Enter flashcard question:"); if(!q)return;
+  const a=prompt("Enter flashcard answer:"); if(!a)return;
+  currentCapsule.flashcards.push({question:q,answer:a});
+  populateAuthorFlashcards(); updateLearnMode();
 });
 
-// Add Quiz
 addQuestionBtn.addEventListener("click",()=>{
-let question=prompt("Enter quiz question:"); if(!question) return;
-let answer=prompt("Enter correct answer:"); if(!answer) return;
-let opts=prompt("Enter options separated by comma:").split(",");
-currentCapsule.quiz.push({question,answer,options:opts});
-populateAuthorQuiz(); updateLearnMode(); renderLibrary(); populateLearnSelector();
+  const question=prompt("Enter quiz question:"); if(!question)return;
+  const answer=prompt("Enter correct answer:"); if(!answer)return;
+  const opts=prompt("Enter options separated by comma:").split(",");
+  currentCapsule.quiz.push({question,answer,options:opts});
+  populateAuthorQuiz(); updateLearnMode();
 });
 
-// Save Capsule
-saveCapsuleBtn.addEventListener("click",()=>{
-currentCapsule.title=titleInput.value;
-currentCapsule.subject=subjectInput.value;
-currentCapsule.level=levelInput.value;
-currentCapsule.description=descInput.value;
-currentCapsule.notes=notesInput.value.split("\n");
-populateAuthorFlashcards(); populateAuthorQuiz(); renderLibrary(); populateLearnSelector(); alert("✅ Capsule Saved!");
+newCapsuleBtn.addEventListener("click",()=>{
+  const title=prompt("Enter new capsule title:"); if(!title)return;
+  const subject=prompt("Enter subject:")||"General";
+  const level=prompt("Enter level (Beginner/Intermediate/Advanced):")||"Beginner";
+  const description=prompt("Enter description:")||"";
+  const newCap={title,subject,level,description,notes:[],flashcards:[],quiz:[]};
+  capsules.push(newCap);
+  renderLibrary();
+  populateLearnSelector();
+  selectCapsule(title);
+  window.scrollTo({top: document.getElementById("author").offsetTop-70, behavior: "smooth"});
 });
 
-// New Capsule
-document.getElementById("newCapsuleBtn").addEventListener("click",()=>{
-let title=prompt("Enter new capsule title:"); if(!title) return;
-let newCaps={title,subject:"",level:"Beginner",description:"",notes:[],flashcards:[],quiz:[]};
-capsules.push(newCaps);
-renderLibrary(); populateLearnSelector(); selectCapsule(title); scrollToAuthor();
-});
-
-// Initial Setup
+// ===== INITIAL SETUP =====
 renderLibrary();
 populateLearnSelector();
-selectCapsule(currentCapsule.title);
+updateLearnMode();
 </script>
 </body>
 </html>
-
