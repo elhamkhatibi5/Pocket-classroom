@@ -1,94 +1,54 @@
 
-/* ===== Body & Theme ===== */
+/* ===== Body & Hero Background ===== */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f9f9f9;
   color: #111;
-  transition: background 0.3s, color 0.3s;
-  min-height: 100vh;
+  transition: background 0.4s, color 0.4s;
   scroll-behavior: smooth;
 }
 
-/* ===== Dark Mode ===== */
 body.dark-mode {
-  background-color: #121212;
+  background-color: #181818;
   color: #eee;
 }
 
-/* ===== Hero Background ===== */
 .hero-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
   background-image: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
   background-size: cover;
   background-position: center;
   filter: brightness(0.35) blur(1.5px);
+  position: fixed;
+  inset: 0;
+  z-index: -1;
 }
 
 /* ===== Navbar ===== */
 .navbar {
-  transition: background 0.3s;
+  background-color: #ff0000 !important; /* قرمز یوتیوب */
 }
-.navbar .nav-link {
-  font-weight: 500;
-  margin-right: 10px;
+.navbar .nav-link, .navbar .navbar-brand {
+  color: #fff !important;
 }
-.navbar .btn-outline-light {
-  transition: color 0.3s, border-color 0.3s;
-}
-body.dark-mode .navbar {
-  background-color: #1f1f1f !important;
-}
-body.dark-mode .btn-outline-light {
-  color: #eee;
-  border-color: #555;
+.navbar .nav-link:hover {
+  color: #ddd !important;
 }
 
-/* ===== Library / Capsule Cards ===== */
-#capsuleGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-  padding: 1rem 0;
-}
-
+/* ===== Capsule Cards ===== */
 .capsule-card {
-  background-color: rgba(255,255,255,0.9);
-  border-radius: 12px;
+  background-color: rgba(255,255,255,0.95);
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  color: #111;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 .capsule-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
   box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
-body.dark-mode .capsule-card {
-  background-color: #282828;
-  color: #eee !important;
-}
 .capsule-card img {
-  width: 100%;
-  height: 160px;
+  height: 150px;
   object-fit: cover;
-}
-.capsule-card .card-body {
-  padding: 0.6rem 0.8rem;
-}
-.capsule-card .card-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 0.2rem;
-}
-.capsule-card .card-text {
-  font-size: 0.8rem;
-  color: #555;
-}
-body.dark-mode .capsule-card .card-text {
-  color: #ccc !important;
 }
 
 /* ===== Flashcards ===== */
@@ -96,7 +56,7 @@ body.dark-mode .capsule-card .card-text {
   width: 280px;
   height: 180px;
   border-radius: 12px;
-  background-color: rgba(255,255,255,0.9);
+  background-color: #fff;
   color: #111;
   display: flex;
   align-items: center;
@@ -105,83 +65,42 @@ body.dark-mode .capsule-card .card-text {
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.6s;
   perspective: 1000px;
-  margin: 10px auto;
   text-align: center;
 }
-.flashcard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+.flashcard.green { background-color: #d4edda; color: #155724; }
+.flashcard.red { background-color: #f8d7da; color: #721c24; }
+
+/* ===== Dark Mode Overrides ===== */
+body.dark-mode .capsule-card {
+  background-color: rgba(30,30,30,0.9);
+  color: #eee;
 }
 body.dark-mode .flashcard {
-  background-color: #282828;
-  color: #eee !important;
+  background-color: #222;
+  color: #fff;
 }
-
-/* ===== Quiz Container ===== */
-#quizContainer {
-  background-color: rgba(255,255,255,0.9);
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  color: #111;
-}
-body.dark-mode #quizContainer {
-  background-color: #282828;
-  color: #eee !important;
-}
-
-/* ===== Forms, Inputs & Textarea ===== */
-input, textarea, select {
-  border-radius: 6px;
-  transition: background 0.3s, color 0.3s, border-color 0.3s;
-}
-body.dark-mode input,
-body.dark-mode textarea,
-body.dark-mode select {
-  background-color: #333;
-  color: #eee;
-  border-color: #555;
-}
-body.dark-mode input:focus,
-body.dark-mode textarea:focus,
-body.dark-mode select:focus {
-  border-color: #888;
+body.dark-mode .navbar {
+  background-color: #111 !important;
 }
 
 /* ===== Buttons ===== */
-.btn {
-  border-radius: 6px;
-  font-weight: 500;
-  transition: background 0.2s, transform 0.2s, color 0.2s;
+.btn-outline-primary {
+  border-color: #ff0000;
+  color: #ff0000;
 }
-.btn:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* ===== Footer ===== */
-footer {
-  background-color: rgba(255,255,255,0.9);
-  color: #555;
-  padding: 1rem 0;
-  text-align: center;
-  transition: background 0.3s, color 0.3s;
-}
-body.dark-mode footer {
-  background-color: #1f1f1f;
-  color: #bbb;
+.btn-outline-primary:hover {
+  background-color: #ff0000;
+  color: #fff;
 }
 
-/* ===== Responsive adjustments ===== */
+/* ===== Learn & Quiz ===== */
+#learn-flashcards, #learn-quiz {
+  margin-top: 20px;
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
-  #capsuleGrid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
-  .flashcard {
-    width: 200px;
-    height: 140px;
-    font-size: 1rem;
-  }
-    }
+  .flashcard { width: 90%; height: 160px; }
+}
