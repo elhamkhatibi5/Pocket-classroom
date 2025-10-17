@@ -1,46 +1,52 @@
+
 // utils.js
-// ===== Utility Functions =====
-
-// Short selector
-export const $ = (s) => document.querySelector(s);
-export const $$ = (s) => document.querySelectorAll(s);
-
-// Generate unique ID
-export const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
-
-// Time ago formatting
-export const timeAgo = (dateString) => {
-  const now = new Date();
-  const past = new Date(dateString);
-  const diff = Math.floor((now - past) / 1000); // seconds
-
-  if(diff < 60) return `${diff}s ago`;
-  if(diff < 3600) return `${Math.floor(diff/60)}m ago`;
-  if(diff < 86400) return `${Math.floor(diff/3600)}h ago`;
-  return `${Math.floor(diff/86400)}d ago`;
+export function generateUUID() {
+    // تولید شناسه یکتا برای هر کپسول یا Flashcard/Quiz
+    return 'xxxxxx-xxxx-4xxx-yxxx-xxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
-// Save to LocalStorage
-export const saveToStorage = (key, value) => {
-  localStorage.setItem(key, JSON.stringify(value));
+// LocalStorage helpers
+export function saveToStorage(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
 }
 
-// Load from LocalStorage
-export const loadFromStorage = (key) => {
-  const data = localStorage.getItem(key);
-  try {
+export function loadFromStorage(key) {
+    const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : null;
-  } catch (e) {
-    console.error("JSON parse error", e);
-    return null;
-  }
 }
 
-// Download JSON file
-export const downloadJSON = (data, filename='capsule.json') => {
-  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = filename;
-  link.click();
+// Dark/Light Mode
+export function toggleTheme(currentMode) {
+    const body = document.body;
+    if (currentMode === 'light') {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        return 'dark';
+    } else {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        return 'light';
+    }
+}
+
+// پیشرفت یادگیری (Learn Progress)
+export function saveProgress(capsuleId, progress) {
+    const allProgress = loadFromStorage('learnProgress') || {};
+    allProgress[capsuleId] = progress;
+    saveToStorage('learnProgress', allProgress);
+}
+
+export function loadProgress(capsuleId) {
+    const allProgress = loadFromStorage('learnProgress') || {};
+    return allProgress[capsuleId] || { knownCards: [], unknownCards: [] };
+}
+
+// کمک برای فیلتر و جستجو
+export function filterByQuery(items, query, field) {
+    if (!query) return items;
+    return items.filter(item => item[field]?.toLowerCase().includes(query.toLowerCase()));
 }
