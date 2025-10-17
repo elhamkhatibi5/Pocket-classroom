@@ -1,57 +1,41 @@
 
 // library.js
-import { $, $$, loadFromStorage, saveToStorage, timeAgo, downloadJSON } from './utils.js';
+import { loadFromStorage, saveToStorage } from "./utils.js";
 
-const capsuleGrid = $('#capsuleGrid');
+let capsules = loadFromStorage("capsules") || [];
 
-// Load all capsules
-export const renderLibrary = () => {
-  const index = loadFromStorage('pc_capsules_index') || [];
-  capsuleGrid.innerHTML = '';
+const capsuleGrid = document.getElementById("capsuleGrid");
 
-  if(index.length === 0){
-    capsuleGrid.innerHTML = `<p class="text-muted">No capsules found. Create one!</p>`;
-    return;
-  }
-
-  index.forEach(c => {
-    const card = document.createElement('div');
-    card.className = 'col-sm-6 col-md-4 col-lg-3';
+export function renderLibrary() {
+  capsuleGrid.innerHTML = "";
+  capsules.forEach((cap, index) => {
+    const card = document.createElement("div");
+    card.className = "col-md-3";
     card.innerHTML = `
-      <div class="capsule-card card shadow-sm p-2">
-        <h5>${c.title}</h5>
-        <p>${c.subject} - ${c.level}</p>
-        <small class="text-muted">Updated: ${timeAgo(c.updatedAt)}</small>
-        <div class="mt-2 d-flex gap-1 flex-wrap">
-          <button class="btn btn-sm btn-success learnBtn" data-id="${c.id}">Learn</button>
-          <button class="btn btn-sm btn-primary editBtn" data-id="${c.id}">Edit</button>
-          <button class="btn btn-sm btn-outline-secondary exportBtn" data-id="${c.id}">Export</button>
-          <button class="btn btn-sm btn-outline-danger deleteBtn" data-id="${c.id}">Delete</button>
-        </div>
+      <div class="card shadow-sm p-2 h-100">
+        <h5>${cap.title}</h5>
+        <p class="text-muted">${cap.subject} | ${cap.level}</p>
+        <button class="btn btn-sm btn-primary w-100" data-index="${index}">Edit</button>
       </div>
     `;
     capsuleGrid.appendChild(card);
   });
 }
 
-// Button events delegation
-export const initLibraryEvents = (onLearn, onEdit) => {
-  capsuleGrid.addEventListener('click', e => {
-    const id = e.target.dataset.id;
-    if(!id) return;
+// افزودن کپسول جدید
+export function addCapsule(cap) {
+  capsules.push(cap);
+  saveToStorage("capsules", capsules);
+  renderLibrary();
+}
 
-    if(e.target.classList.contains('learnBtn')) onLearn(id);
-    if(e.target.classList.contains('editBtn')) onEdit(id);
-    if(e.target.classList.contains('exportBtn')){
-      const capsule = loadFromStorage(`pc_capsule_${id}`);
-      downloadJSON(capsule, `${capsule.meta.title}.json`);
-    }
-    if(e.target.classList.contains('deleteBtn')){
-      let index = loadFromStorage('pc_capsules_index') || [];
-      index = index.filter(c => c.id !== id);
-      saveToStorage('pc_capsules_index', index);
-      localStorage.removeItem(`pc_capsule_${id}`);
-      renderLibrary();
-    }
-  });
+// ویرایش یک کپسول
+export function getCapsule(index) {
+  return capsules[index];
+}
+
+export function updateCapsule(index, cap) {
+  capsules[index] = cap;
+  saveToStorage("capsules", capsules);
+  renderLibrary();
 }
