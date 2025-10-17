@@ -1,38 +1,22 @@
-{
-  "schema": "pocket-classroom/v1",
-  "id": "sample_math_1",
-  "meta": {
-    "title": "Sample Math Capsule",
-    "subject": "Mathematics",
-    "level": "Beginner",
-    "description": "Addition basics"
-  },
-  "notes": [
-    "Addition is combining numbers.",
-    "Example: 1 + 1 = 2"
-  ],
-  "flashcards": [
-    {
-      "front": "1 + 1",
-      "back": "2"
+
+[
+  {
+    "id": "cap1",
+    "meta": {
+      "title": "Biology Basics",
+      "subject": "Biology",
+      "level": "Beginner",
+      "description": "Introduction to Biology"
     },
-    {
-      "front": "2 + 2",
-      "back": "4"
-    }
-  ],
-  "quiz": [
-    {
-      "question": "2 + 3",
-      "choices": [
-        "4",
-        "5",
-        "6",
-        "3"
-      ],
-      "answer": 1,
-      "explanation": "2+3=5"
-    }
-  ],
-  "updatedAt": "2025-10-01T12:00:00.000Z"
-}
+    "notes": ["Cell is the basic unit of life", "DNA carries genetic info"],
+    "flashcards": [
+      {"front": "Cell", "back": "Basic unit of life"},
+      {"front": "DNA", "back": "Genetic material"}
+    ],
+    "quiz": [
+      {"question":"What is the basic unit of life?", "choices":["Atom","Molecule","Cell","Organ"], "answer":2}
+    ],
+    "updatedAt": "2025-10-17T00:00:00Z",
+    "schema":"pocket-classroom/v1"
+  }
+]
