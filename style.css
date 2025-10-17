@@ -1,85 +1,118 @@
 
-/* style.css */
+/* ================================
+   Pocket Classroom CSS
+   Style: YouTube-inspired, SPA
+   Colors: green/blue, light & dark mode
+   ================================ */
 
-/* ===== Body ===== */
+/* ===== Base & Body ===== */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
-  line-height: 1.6;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
-  color: #222;
-  transition: background 0.4s, color 0.4s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* ===== Dark Mode ===== */
-body.dark-mode {
-  background-color: #121212;
+.light-mode {
+  background-color: #f9f9f9;
+  color: #111;
+}
+
+.dark-mode {
+  background-color: #181818;
   color: #eee;
+}
+
+/* ===== Hero Background ===== */
+.hero-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: linear-gradient(135deg, #1db954, #00bfff);
+  opacity: 0.05;
 }
 
 /* ===== Navbar ===== */
 .navbar {
-  background-color: #fff;
-  color: #222;
-  transition: background 0.3s;
-}
-body.dark-mode .navbar {
-  background-color: #1f1f1f;
-  color: #eee;
-}
-.navbar .nav-link {
-  color: #222;
   font-weight: 500;
-  transition: color 0.3s;
-}
-.navbar .nav-link.active {
-  color: #0f9d58; /* سبز یوتیوب استایل */
-}
-body.dark-mode .navbar .nav-link {
-  color: #eee;
-}
-body.dark-mode .navbar .nav-link.active {
-  color: #0f9d58;
+  transition: background-color 0.3s;
 }
 
-/* ===== Section Titles ===== */
-h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+.navbar-light-mode {
+  background-color: #fff !important;
+}
+
+.navbar-dark-mode {
+  background-color: #202020 !important;
+}
+
+.nav-link {
+  margin-right: 1rem;
+  transition: color 0.2s;
+}
+
+.nav-link.active {
   font-weight: 600;
+  color: #1db954 !important;
 }
 
-/* ===== Capsule Cards ===== */
-.capsule-card {
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 0;
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.capsule-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
-body.dark-mode .capsule-card {
-  background-color: #1f1f1f;
-  color: #eee;
+/* ===== Buttons ===== */
+.btn-success {
+  background-color: #1db954;
+  border-color: #1db954;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* ===== Card Body ===== */
-.capsule-card .card-body h5 {
-  font-weight: 600;
-  font-size: 1.1rem;
+.btn-success:hover {
+  background-color: #17a94a;
 }
-.capsule-card .card-body p {
-  font-size: 0.9rem;
+
+.btn-outline-success {
+  color: #1db954;
+  border-color: #1db954;
+}
+
+.btn-outline-success:hover {
+  background-color: #1db954;
+  color: #fff;
+}
+
+.btn-outline-secondary {
   color: #555;
+  border-color: #555;
 }
-body.dark-mode .capsule-card .card-body p {
-  color: #ccc;
+
+.btn-outline-secondary:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+/* ===== Cards / Forms ===== */
+.card {
+  border-radius: 10px;
+  border: none;
+}
+
+.card.shadow-sm {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* ===== Sections ===== */
+section {
+  padding-bottom: 3rem;
+}
+
+/* ===== Inputs / Textareas ===== */
+input.form-control, textarea.form-control, select.form-select {
+  border-radius: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input.form-control:focus, textarea.form-control:focus, select.form-select:focus {
+  border-color: #1db954;
+  box-shadow: 0 0 5px rgba(29,185,84,0.4);
 }
 
 /* ===== Flashcards ===== */
@@ -87,68 +120,49 @@ body.dark-mode .capsule-card .card-body p {
   width: 300px;
   height: 180px;
   background-color: #fff;
-  color: #222;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.6s;
+  user-select: none;
   perspective: 1000px;
-  margin: 10px auto;
+  transition: transform 0.6s;
 }
-body.dark-mode .flashcard {
-  background-color: #1f1f1f;
+
+.dark-mode .flashcard {
+  background-color: #2a2a2a;
   color: #eee;
 }
 
-/* ===== Buttons ===== */
-.btn-success {
-  background-color: #0f9d58;
-  border-color: #0f9d58;
-  transition: background 0.3s;
-}
-.btn-success:hover {
-  background-color: #0da550;
-}
-.btn-outline-success {
-  color: #0f9d58;
-  border-color: #0f9d58;
-}
-.btn-outline-success:hover {
-  background-color: #0f9d58;
-  color: #fff;
-}
-
-/* ===== Inputs ===== */
-.form-control, .form-select {
+/* ===== List Groups ===== */
+.list-group-item {
   border-radius: 8px;
+  margin-bottom: 0.5rem;
 }
-body.dark-mode .form-control, body.dark-mode .form-select {
-  background-color: #2b2b2b;
-  color: #eee;
-  border-color: #555;
+
+.list-group-item:hover {
+  background-color: rgba(29,185,84,0.1);
+  cursor: pointer;
+}
+
+/* ===== Learn Mode ===== */
+#learn-flashcards button {
+  min-width: 60px;
 }
 
 /* ===== Footer ===== */
 footer {
-  background-color: #f1f1f1;
-  color: #555;
-}
-body.dark-mode footer {
-  background-color: #1a1a1a;
-  color: #aaa;
+  font-size: 0.85rem;
+  color: #999;
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 576px) {
-  .capsule-card {
-    margin: 0 auto 15px auto;
-  }
+@media (max-width: 768px) {
   .flashcard {
     width: 90%;
+    height: 150px;
   }
 }
