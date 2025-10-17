@@ -1,85 +1,23 @@
 
-/* style.css */
+body.light-mode { background: #f8f9fa; color: #212529; }
+body.dark-mode { background: #212529; color: #f8f9fa; }
 
-/* ===== Base ===== */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  transition: background 0.3s, color 0.3s;
-}
-.light-mode { background: #f9f9f9; color: #222; }
-.dark-mode  { background: #121212; color: #eee; }
+.navbar { border-bottom: 1px solid #dee2e6; }
 
-/* ===== Hero Background ===== */
-.hero-bg {
-  position: fixed;
-  top:0; left:0; width:100%; height:100%;
-  background: linear-gradient(120deg,#4CAF50,#2196F3);
-  opacity:0.05;
-  z-index:-1;
-}
-
-/* ===== Navbar ===== */
-.navbar { transition: background 0.3s; }
-.navbar .nav-link.active { font-weight: bold; color:#fff; }
-.navbar-light-mode { background: #fff !important; color:#222; }
-.navbar-dark-mode  { background: #222 !important; color:#eee; }
-
-/* ===== Library Cards ===== */
-#capsuleGrid .card {
-  border-radius: 12px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-#capsuleGrid .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-/* ===== Buttons ===== */
-.btn-success { background: #4CAF50; border-color: #4CAF50; }
-.btn-success:hover { background: #45A049; }
-
-.btn-primary { background: #2196F3; border-color: #2196F3; }
-.btn-primary:hover { background: #1E88E5; }
-
-.btn-outline-success { color:#4CAF50; border-color:#4CAF50; }
-.btn-outline-success:hover { background:#4CAF50; color:#fff; }
-
-.btn-outline-secondary { color:#777; border-color:#777; }
-.btn-outline-secondary:hover { background:#777; color:#fff; }
-
-/* ===== Forms ===== */
-.form-control, .form-select {
-  border-radius: 8px;
-  transition: border-color 0.2s;
-}
-.form-control:focus, .form-select:focus { border-color: #2196F3; box-shadow:none; }
-
-/* ===== Flashcards ===== */
 .flashcard {
   width: 250px;
-  height: 120px;
-  background:#fff;
-  border-radius: 12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  font-weight:bold;
-  font-size:1.1rem;
-  transition: transform 0.3s, background 0.3s, color 0.3s;
+  height: 150px;
+  border: 1px solid #6c757d;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  background-color: #fff;
 }
-.dark-mode .flashcard { background:#333; color:#fff; }
-.flashcard:hover { transform: translateY(-5px) scale(1.02); }
 
-/* ===== Quiz Container ===== */
-#quizContainer { border-radius:12px; background:#fff; }
-.dark-mode #quizContainer { background:#222; color:#eee; }
+body.dark-mode .flashcard { background-color: #343a40; color: #f8f9fa; }
 
-/* ===== Notes List ===== */
-#notesList li { padding:4px 8px; margin:2px 0; border-radius:6px; background:#e8f5e9; }
-.dark-mode #notesList li { background:#333; }
-
-/* ===== Misc ===== */
-.card { background:#fff; color:#222; }
-.dark-mode .card { background:#1e1e1e; color:#eee; }
+.btn-success { background-color: #28a745; border-color: #28a745; }
