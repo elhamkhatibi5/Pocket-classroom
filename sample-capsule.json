@@ -1,22 +1,38 @@
 
-[
-  {
-    "id": "cap1",
-    "meta": {
+{
+  "capsules": [
+    {
       "title": "Biology Basics",
       "subject": "Biology",
       "level": "Beginner",
-      "description": "Introduction to Biology"
-    },
-    "notes": ["Cell is the basic unit of life", "DNA carries genetic info"],
-    "flashcards": [
-      {"front": "Cell", "back": "Basic unit of life"},
-      {"front": "DNA", "back": "Genetic material"}
-    ],
-    "quiz": [
-      {"question":"What is the basic unit of life?", "choices":["Atom","Molecule","Cell","Organ"], "answer":2}
-    ],
-    "updatedAt": "2025-10-17T00:00:00Z",
-    "schema":"pocket-classroom/v1"
-  }
-]
+      "description": "Introduction to basic biology concepts.",
+      "notes": [
+        "Cells are the basic unit of life.",
+        "DNA stores genetic information.",
+        "Photosynthesis occurs in plants."
+      ],
+      "flashcards": [
+        {
+          "question": "What is the basic unit of life?",
+          "answer": "Cell"
+        },
+        {
+          "question": "Where is genetic information stored?",
+          "answer": "DNA"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "Which process occurs in plants to make food?",
+          "options": ["Photosynthesis", "Respiration", "Digestion", "Transpiration"],
+          "answer": "Photosynthesis"
+        },
+        {
+          "question": "What does DNA stand for?",
+          "options": ["Deoxyribonucleic Acid", "Dynamic Neural Axis", "Dual Nucleic Acid", "None of the above"],
+          "answer": "Deoxyribonucleic Acid"
+        }
+      ]
+    }
+  ]
+}
