@@ -1,39 +1,95 @@
 
 [
   {
+    "id": "capsule-1",
     "title": "Biology Basics",
     "subject": "Biology",
     "level": "Beginner",
-    "description": "Introduction to biology",
-    "notes": ["Cell is the basic unit", "DNA carries genetic info"],
-    "flashcards": [{"front":"Cell", "back":"Basic unit of life"},{"front":"DNA", "back":"Genetic material"}],
-    "quiz": [{"question":"What is DNA?", "options":["Protein","Genetic material","Carbohydrate","Lipid"], "answer":1}]
+    "description": "Introduction to cells, DNA, and basic life forms.",
+    "notes": [
+      "Cells are the basic unit of life.",
+      "DNA contains genetic information.",
+      "Plants make their own food via photosynthesis."
+    ],
+    "flashcards": [
+      { "question": "What is the basic unit of life?", "answer": "Cell" },
+      { "question": "Where is DNA stored?", "answer": "In the nucleus" }
+    ],
+    "quiz": [
+      {
+        "question": "Which process do plants use to make food?",
+        "options": ["Photosynthesis", "Respiration", "Transpiration", "Fermentation"],
+        "answer": "Photosynthesis"
+      }
+    ]
   },
   {
-    "title": "Math Fundamentals",
-    "subject": "Math",
-    "level": "Beginner",
-    "description": "Basic arithmetic",
-    "notes": ["Addition", "Subtraction", "Multiplication", "Division"],
-    "flashcards": [{"front":"2+2", "back":"4"},{"front":"3*3", "back":"9"}],
-    "quiz": [{"question":"5+3=?", "options":["7","8","9","6"], "answer":1}]
-  },
-  {
-    "title": "Physics Intro",
-    "subject": "Physics",
-    "level": "Intermediate",
-    "description": "Basic physics principles",
-    "notes": ["Newton's laws", "Gravity"],
-    "flashcards": [{"front":"Force", "back":"Mass*Acceleration"}],
-    "quiz": [{"question":"Who formulated gravity?", "options":["Einstein","Newton","Tesla","Galileo"], "answer":1}]
-  },
-  {
-    "title": "History 101",
+    "id": "capsule-2",
+    "title": "World History 101",
     "subject": "History",
     "level": "Beginner",
-    "description": "World history overview",
-    "notes": ["Ancient civilizations", "Middle ages"],
-    "flashcards": [{"front":"Pyramids", "back":"Ancient Egypt"}],
-    "quiz": [{"question":"The Roman Empire?", "options":["Europe","Asia","Africa","America"], "answer":0}]
+    "description": "Overview of major historical events and civilizations.",
+    "notes": [
+      "Ancient Egypt was famous for pyramids.",
+      "The Roman Empire lasted over 500 years.",
+      "The Renaissance was a period of art and science."
+    ],
+    "flashcards": [
+      { "question": "Which civilization built the pyramids?", "answer": "Ancient Egypt" },
+      { "question": "When was the Renaissance?", "answer": "14th to 17th century" }
+    ],
+    "quiz": [
+      {
+        "question": "Which empire lasted over 500 years?",
+        "options": ["Roman Empire", "Ottoman Empire", "Mongol Empire", "Greek Empire"],
+        "answer": "Roman Empire"
+      }
+    ]
+  },
+  {
+    "id": "capsule-3",
+    "title": "Basic Algebra",
+    "subject": "Mathematics",
+    "level": "Intermediate",
+    "description": "Learn variables, equations, and simple algebraic operations.",
+    "notes": [
+      "An equation shows equality between expressions.",
+      "Variables represent unknown values.",
+      "Combine like terms to simplify expressions."
+    ],
+    "flashcards": [
+      { "question": "Solve for x: 2x + 3 = 7", "answer": "x = 2" },
+      { "question": "What does a variable represent?", "answer": "An unknown value" }
+    ],
+    "quiz": [
+      {
+        "question": "Simplify: 3x + 2x",
+        "options": ["5x", "6x", "x", "None"],
+        "answer": "5x"
+      }
+    ]
+  },
+  {
+    "id": "capsule-4",
+    "title": "Introduction to Programming",
+    "subject": "Computer Science",
+    "level": "Beginner",
+    "description": "Basics of coding, variables, loops, and functions.",
+    "notes": [
+      "Programming uses code to give instructions to a computer.",
+      "Variables store data values.",
+      "Loops repeat code multiple times."
+    ],
+    "flashcards": [
+      { "question": "What stores data values?", "answer": "Variable" },
+      { "question": "Which loop repeats code multiple times?", "answer": "For/While loop" }
+    ],
+    "quiz": [
+      {
+        "question": "Which of these is a programming language?",
+        "options": ["Python", "HTML", "CSS", "All of the above"],
+        "answer": "Python"
+      }
+    ]
   }
 ]
