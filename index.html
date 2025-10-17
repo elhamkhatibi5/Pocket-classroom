@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pocket Classroom — Professional Edition</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -12,56 +12,53 @@
 <body class="light-mode">
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand d-flex align-items-center" href="#">
-      <i class="bi bi-mortarboard-fill me-2 fs-4 text-warning"></i>
+      <i class="bi bi-mortarboard-fill me-2 fs-4 text-success"></i>
       <strong>Pocket Classroom</strong>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="#library"><i class="bi bi-journal-bookmark"></i> Library</a></li>
-        <li class="nav-item"><a class="nav-link" href="#author"><i class="bi bi-pencil-square"></i> Author</a></li>
-        <li class="nav-item"><a class="nav-link" href="#learn"><i class="bi bi-lightbulb"></i> Learn</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#library">Library</a></li>
+        <li class="nav-item"><a class="nav-link" href="#author">Author</a></li>
+        <li class="nav-item"><a class="nav-link" href="#learn">Learn</a></li>
       </ul>
-      <button id="themeToggle" class="btn btn-outline-light btn-sm"><i class="bi bi-moon-stars"></i> Dark</button>
+      <button id="themeToggle" class="btn btn-outline-dark btn-sm"><i class="bi bi-moon-stars"></i> Dark</button>
     </div>
   </div>
 </nav>
 
 <main class="container mt-5 pt-5">
-  <!-- Library -->
+
+  <!-- Library Section -->
   <section id="library">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h3><i class="bi bi-journal-text text-primary"></i> Your Capsules</h3>
+      <h3>Library</h3>
       <div>
-        <button id="newCapsuleBtn" class="btn btn-success me-2"><i class="bi bi-plus-circle"></i> New Capsule</button>
-        <button id="importJsonBtnLibrary" class="btn btn-outline-success btn-sm"><i class="bi bi-file-arrow-up"></i> Import JSON</button>
-        <button id="exportJsonBtnLibrary" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-arrow-down"></i> Export JSON</button>
+        <button id="newCapsuleBtn" class="btn btn-success btn-sm"><i class="bi bi-plus-circle"></i> New Capsule</button>
+        <button id="importJsonBtn" class="btn btn-outline-primary btn-sm"><i class="bi bi-file-arrow-up"></i> Import JSON</button>
+        <button id="exportJsonBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-arrow-down"></i> Export JSON</button>
       </div>
     </div>
-    <input type="text" id="searchCapsule" class="form-control mb-4" placeholder="Search capsules...">
     <div id="capsuleGrid" class="row g-3"></div>
   </section>
 
-  <!-- Author -->
-  <section id="author" class="mt-5">
-    <h3 class="mb-3"><i class="bi bi-pencil-square text-warning"></i> Create or Edit Capsule</h3>
+  <!-- Author Section -->
+  <section id="author" class="mt-5 d-none">
+    <h3>Author</h3>
     <form id="metaForm" class="card p-3 shadow-sm mb-4">
       <div class="row g-3">
         <div class="col-md-6">
-          <label class="form-label">Title</label>
+          <label>Title</label>
           <input type="text" id="titleInput" class="form-control" placeholder="Enter capsule title">
         </div>
         <div class="col-md-3">
-          <label class="form-label">Subject</label>
+          <label>Subject</label>
           <input type="text" id="subjectInput" class="form-control" placeholder="e.g. Biology">
         </div>
         <div class="col-md-3">
-          <label class="form-label">Level</label>
+          <label>Level</label>
           <select id="levelInput" class="form-select">
             <option>Beginner</option>
             <option>Intermediate</option>
@@ -70,29 +67,22 @@
         </div>
       </div>
       <div class="mt-3">
-        <label class="form-label">Description</label>
+        <label>Description</label>
         <textarea id="descInput" class="form-control" rows="2" placeholder="Short description..."></textarea>
       </div>
     </form>
 
     <div class="mb-3">
-      <h5><i class="bi bi-sticky"></i> Notes</h5>
-      <textarea id="notesInput" class="form-control mb-3" rows="5" placeholder="Write each note on a new line..."></textarea>
+      <h5>Notes</h5>
+      <textarea id="notesInput" class="form-control mb-3" rows="5" placeholder="One note per line..."></textarea>
 
-      <h5><i class="bi bi-card-text"></i> Flashcards</h5>
+      <h5>Flashcards</h5>
       <div id="flashcardsList" class="list-group mb-3"></div>
-      <button id="addFlashcardBtn" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-circle"></i> Add Flashcard</button>
+      <button id="addFlashcardBtn" class="btn btn-outline-primary btn-sm mb-3">Add Flashcard</button>
 
-      <h5 class="mt-4"><i class="bi bi-question-circle"></i> Quiz Questions</h5>
+      <h5>Quiz</h5>
       <div id="quizList" class="list-group mb-3"></div>
-      <button id="addQuestionBtn" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-circle"></i> Add Question</button>
-
-      <h5 class="mt-4"><i class="bi bi-file-earmark-arrow-up"></i> Import / Export JSON</h5>
-      <div class="d-flex gap-2">
-        <input type="file" id="importJsonInput" class="form-control form-control-sm" />
-        <button id="importJsonBtnAuthor" class="btn btn-outline-success btn-sm"><i class="bi bi-file-arrow-up"></i> Import</button>
-        <button id="exportJsonBtnAuthor" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-arrow-down"></i> Export</button>
-      </div>
+      <button id="addQuestionBtn" class="btn btn-outline-primary btn-sm mb-3">Add Question</button>
     </div>
 
     <div class="text-end">
@@ -100,42 +90,39 @@
     </div>
   </section>
 
-  <!-- Learn -->
-  <section id="learn" class="mt-5">
-    <h3 class="mb-3"><i class="bi bi-lightbulb text-info"></i> Learn Mode</h3>
+  <!-- Learn Section -->
+  <section id="learn" class="mt-5 d-none">
+    <h3>Learn Mode</h3>
     <select id="learnSelector" class="form-select w-auto mb-3"></select>
-
     <div id="learn-notes" class="mb-4">
-      <h5><i class="bi bi-journal"></i> Notes</h5>
+      <h5>Notes</h5>
       <ol id="notesList" class="list-group list-group-numbered"></ol>
     </div>
-
     <div id="learn-flashcards" class="text-center mb-4">
-      <h5><i class="bi bi-card-text"></i> Flashcards</h5>
+      <h5>Flashcards</h5>
       <div id="flashcardDisplay" class="flashcard mx-auto my-3">Click to Flip</div>
       <div class="d-flex justify-content-center gap-2">
-        <button id="prevCardBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i></button>
-        <button id="flipCardBtn" class="btn btn-warning btn-sm"><i class="bi bi-arrow-repeat"></i></button>
-        <button id="nextCardBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-right"></i></button>
+        <button id="prevCardBtn" class="btn btn-outline-secondary btn-sm">Prev</button>
+        <button id="flipCardBtn" class="btn btn-warning btn-sm">Flip</button>
+        <button id="nextCardBtn" class="btn btn-outline-secondary btn-sm">Next</button>
       </div>
     </div>
-
     <div id="learn-quiz">
-      <h5><i class="bi bi-patch-question"></i> Quiz</h5>
+      <h5>Quiz</h5>
       <div id="quizContainer" class="card p-3 shadow-sm"></div>
     </div>
   </section>
+
 </main>
 
 <footer class="text-center py-3 mt-4 border-top text-muted">
   <small>© 2025 Pocket Classroom — Offline Learning</small>
 </footer>
 
-<!-- Scripts -->
+<script type="module" src="main.js"></script>
 <script type="module" src="utils.js"></script>
 <script type="module" src="library.js"></script>
 <script type="module" src="author.js"></script>
 <script type="module" src="learn.js"></script>
-<script type="module" src="main.js"></script>
 </body>
 </html>
