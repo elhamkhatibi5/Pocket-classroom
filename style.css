@@ -1,73 +1,24 @@
 
-/* ===== General ===== */
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
-  color: #212529;
-  transition: all 0.3s ease;
-}
-
-.light-mode {
+/* Light/Dark theme colors */
+body.light-mode {
   background-color: #f8f9fa;
   color: #212529;
 }
-
-.dark-mode {
+body.dark-mode {
   background-color: #121212;
-  color: #e0e0e0;
+  color: #f8f9fa;
 }
 
-/* ===== Navbar ===== */
-.navbar-light {
-  background-color: #e3f2fd !important;
+/* Capsule cards */
+.card {
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-.dark-mode .navbar-light {
-  background-color: #1f1f1f !important;
-}
-
-/* ===== Tabs ===== */
-.tab-section {
-  display: none;
-}
-.tab-section.active {
-  display: block;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* ===== Subtabs ===== */
-.subtab {
-  display: none;
-}
-.subtab.active {
-  display: block;
-}
-
-/* ===== Learn panels ===== */
-.learn-panel {
-  display: none;
-}
-.learn-panel.active {
-  display: block;
-}
-
-/* ===== Flashcard ===== */
-.flashcard {
-  width: 250px;
-  height: 150px;
-  border: 1px solid #6c757d;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background-color: #fff;
-  transition: transform 0.3s, background-color 0.3s;
-}
-.dark-mode .flashcard {
-  background-color: #333;
-  color: #fff;
-}
-
-/* Buttons spacing */
-button {
-  transition: all 0.2s ease;
+/* Sections */
+.app-section {
+  margin-top: 20px;
 }
