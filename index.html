@@ -1,43 +1,73 @@
 
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pocket Classroom</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pocket Classroom</title>
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Pocket Classroom</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTabs">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTabs">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link active" data-tab="library" href="#">Library</a></li>
-        <li class="nav-item"><a class="nav-link" data-tab="author" href="#">Author</a></li>
-        <li class="nav-item"><a class="nav-link" data-tab="learn" href="#">Learn</a></li>
-      </ul>
-      <button id="themeToggle" class="btn btn-outline-light btn-sm">Light/Dark</button>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Pocket Classroom</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" data-target="library">Library</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-target="author">Author</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-target="learn">Learn</a>
+          </li>
+        </ul>
+        <button id="themeToggle" class="btn btn-outline-light">🌙</button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<main class="container my-4">
-  <section id="library" class="tab-section"></section>
-  <section id="author" class="tab-section" style="display:none;"></section>
-  <section id="learn" class="tab-section" style="display:none;"></section>
-</main>
+  <!-- Sections -->
+  <main class="container my-4">
+    <!-- Library -->
+    <section id="library" class="app-section">
+      <h2>Library</h2>
+      <div class="d-flex mb-3 gap-2">
+        <button id="newCapsule" class="btn btn-success">New Capsule</button>
+        <button id="importCapsule" class="btn btn-primary">Import JSON</button>
+      </div>
+      <div id="capsuleGrid" class="row row-cols-1 row-cols-md-3 g-3">
+        <!-- Capsule cards inserted by JS -->
+      </div>
+    </section>
 
-<script type="module" src="js/utils.js"></script>
-<script type="module" src="js/storage.js"></script>
-<script type="module" src="js/library.js"></script>
-<script type="module" src="js/author.js"></script>
-<script type="module" src="js/learn.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Author -->
+    <section id="author" class="app-section d-none">
+      <h2>Author Mode</h2>
+      <div id="authorFormContainer">
+        <!-- Author form inserted by JS -->
+      </div>
+    </section>
+
+    <!-- Learn -->
+    <section id="learn" class="app-section d-none">
+      <h2>Learn Mode</h2>
+      <div id="learnContainer">
+        <!-- Learn tabs and content inserted by JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
