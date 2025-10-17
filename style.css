@@ -1,129 +1,187 @@
 
-/* ===== GENERAL ===== */
+/* ===== Body & Theme ===== */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #111;
   transition: background 0.3s, color 0.3s;
-  margin: 0;
-  padding: 0;
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
-/* ===== LIGHT & DARK MODE ===== */
-body.light-mode {
-  background-color: #f8f9fa;
-  color: #212529;
-}
-
+/* ===== Dark Mode ===== */
 body.dark-mode {
   background-color: #121212;
-  color: #f0f0f0;
+  color: #eee;
 }
 
-/* ===== HERO / LIBRARY BACKGROUND ===== */
+/* ===== Hero Background ===== */
 .hero-bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 350px;
-  background-image: url('library-bg.jpg'); /* تصویر Library قدیمی خودت */
+  inset: 0;
+  z-index: -1;
+  background-image: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
   background-size: cover;
   background-position: center;
-  filter: brightness(0.85);
-  z-index: -1;
+  filter: brightness(0.35) blur(1.5px);
 }
 
-/* ===== NAVBAR ===== */
+/* ===== Navbar ===== */
 .navbar {
   transition: background 0.3s;
+}
+.navbar .nav-link {
+  font-weight: 500;
+  margin-right: 10px;
+}
+.navbar .btn-outline-light {
+  transition: color 0.3s, border-color 0.3s;
 }
 body.dark-mode .navbar {
   background-color: #1f1f1f !important;
 }
-body.light-mode .navbar {
-  background-color: #343a40 !important;
-}
-.navbar-brand strong {
-  font-weight: bold;
-}
-.nav-link {
-  transition: color 0.3s;
-}
-body.dark-mode .nav-link {
-  color: #f0f0f0 !important;
-}
-body.light-mode .nav-link {
-  color: #ffffff !important;
+body.dark-mode .btn-outline-light {
+  color: #eee;
+  border-color: #555;
 }
 
-/* ===== CARDS ===== */
-.card {
-  border-radius: 12px;
-  transition: transform 0.2s, box-shadow 0.2s;
+/* ===== Library / Capsule Cards ===== */
+#capsuleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
 }
-.card:hover {
+
+.capsule-card {
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: #111;
+}
+.capsule-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
-body.dark-mode .card {
-  background-color: #1e1e1e;
-  color: #f0f0f0;
+body.dark-mode .capsule-card {
+  background-color: #282828;
+  color: #eee !important;
 }
-body.light-mode .card {
-  background-color: #ffffff;
-  color: #212529;
+.capsule-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.capsule-card .card-body {
+  padding: 0.6rem 0.8rem;
+}
+.capsule-card .card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.capsule-card .card-text {
+  font-size: 0.8rem;
+  color: #555;
+}
+body.dark-mode .capsule-card .card-text {
+  color: #ccc !important;
 }
 
-/* ===== BUTTONS ===== */
-.btn {
-  border-radius: 8px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-/* ===== FLASHCARDS ===== */
+/* ===== Flashcards ===== */
 .flashcard {
-  width: 300px;
-  min-height: 150px;
-  background-color: #ffc107;
+  width: 280px;
+  height: 180px;
   border-radius: 12px;
+  background-color: rgba(255,255,255,0.9);
+  color: #111;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
   font-size: 1.2rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s;
-  user-select: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  perspective: 1000px;
+  margin: 10px auto;
+  text-align: center;
+}
+.flashcard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 body.dark-mode .flashcard {
-  background-color: #ffb300;
-  color: #121212;
-}
-body.light-mode .flashcard {
-  background-color: #ffc107;
-  color: #212529;
+  background-color: #282828;
+  color: #eee !important;
 }
 
-/* ===== LIST ITEMS ===== */
-.list-group-item {
-  border-radius: 10px;
-  margin-bottom: 5px;
+/* ===== Quiz Container ===== */
+#quizContainer {
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: #111;
+}
+body.dark-mode #quizContainer {
+  background-color: #282828;
+  color: #eee !important;
+}
+
+/* ===== Forms, Inputs & Textarea ===== */
+input, textarea, select {
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: #333;
+  color: #eee;
+  border-color: #555;
+}
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+  border-color: #888;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+}
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ===== Footer ===== */
+footer {
+  background-color: rgba(255,255,255,0.9);
+  color: #555;
+  padding: 1rem 0;
+  text-align: center;
   transition: background 0.3s, color 0.3s;
 }
-body.dark-mode .list-group-item {
-  background-color: #1e1e1e;
-  color: #f0f0f0;
-}
-body.light-mode .list-group-item {
-  background-color: #ffffff;
-  color: #212529;
+body.dark-mode footer {
+  background-color: #1f1f1f;
+  color: #bbb;
 }
 
-/* ===== QUIZ BUTTONS ===== */
-#quizContainer button {
-  border-radius: 8px;
-  margin: 2px;
-  transition: transform 0.2s;
-}
+/* ===== Responsive adjustments ===== */
+@media (max-width: 768px) {
+  #capsuleGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  .flashcard {
+    width: 200px;
+    height: 140px;
+    font-size: 1rem;
+  }
+    }
