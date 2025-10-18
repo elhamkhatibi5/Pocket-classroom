@@ -1,139 +1,144 @@
 
-/* style.css */
+/* ===========
+   General Layout
+==============*/
+body {
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.4s, color 0.4s;
+  min-height: 100vh;
+}
 
-/* =======================
-   General & Body
-======================= */
+/* ========== LIGHT MODE ========== */
 body.light-mode {
-  background-color: #f0f8ff;
-  color: #222;
+  background: linear-gradient(135deg, #e3f9f4, #cde9ff);
+  color: #042b37;
 }
 
+body.light-mode .navbar {
+  background: linear-gradient(90deg, #00b894, #0984e3);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+body.light-mode .card {
+  background: #fff;
+  border: none;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+/* Buttons */
+body.light-mode .btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+body.light-mode .btn-primary {
+  background: #00b894;
+  border: none;
+}
+body.light-mode .btn-primary:hover {
+  background: #009874;
+}
+
+body.light-mode .btn-outline-primary {
+  border-color: #0984e3;
+  color: #0984e3;
+}
+body.light-mode .btn-outline-primary:hover {
+  background: #0984e3;
+  color: white;
+}
+
+/* ========== DARK MODE ========== */
 body.dark-mode {
-  background-color: #0d1b2a;
-  color: #f0f8ff;
+  background: linear-gradient(135deg, #0a192f, #001f3f);
+  color: #e9f6f8;
 }
 
-h3, h5 {
-  font-weight: 600;
+body.dark-mode .navbar {
+  background: linear-gradient(90deg, #005f56, #004e92);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
-/* =======================
-   Navbar
-======================= */
-.navbar {
-  border-bottom: 2px solid rgba(255,255,255,0.1);
+body.dark-mode .card {
+  background: #112240;
+  border: 1px solid #0ef;
+  box-shadow: 0 3px 10px rgba(0,255,255,0.1);
 }
 
+/* Buttons */
+body.dark-mode .btn-primary {
+  background: #00e0a1;
+  border: none;
+  color: #001f2a;
+}
+body.dark-mode .btn-primary:hover {
+  background: #00b894;
+}
+
+body.dark-mode .btn-outline-primary {
+  color: #00e0a1;
+  border-color: #00e0a1;
+}
+body.dark-mode .btn-outline-primary:hover {
+  background: #00e0a1;
+  color: #001f2a;
+}
+
+/* Navbar Links */
 .nav-link {
-  transition: color 0.2s;
+  color: white !important;
+  font-weight: 500;
+  transition: 0.3s;
 }
 
 .nav-link:hover {
-  color: #00ffc3 !important;
+  color: #dff9fb !important;
+  transform: scale(1.05);
 }
 
-/* =======================
-   Buttons
-======================= */
-.btn-outline-light, .btn-outline-info, .btn-outline-warning, .btn-outline-primary {
-  transition: transform 0.1s, box-shadow 0.2s;
-}
-
-.btn-outline-light:hover, .btn-outline-info:hover, .btn-outline-warning:hover, .btn-outline-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-/* =======================
-   Cards & Lists
-======================= */
-.card, .list-group-item {
-  border-radius: 12px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card:hover, .list-group-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-
-/* =======================
-   Flashcards
-======================= */
-.flashcard {
-  width: 300px;
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Like button */
+.like-btn {
+  color: #bbb;
   font-size: 1.2rem;
-  font-weight: 500;
-  background: linear-gradient(135deg,#00c6ff,#0072ff);
-  color: #fff;
   cursor: pointer;
-  perspective: 1000px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  transition: transform 0.6s;
+  transition: 0.3s;
+}
+.like-btn.text-danger {
+  color: #ff4757 !important;
 }
 
-.flashcard.flipped {
-  transform: rotateY(180deg);
+/* Containers and sections */
+section {
+  padding: 20px;
+  display: none;
 }
 
-/* =======================
-   Notes & Quiz
-======================= */
-.list-group-numbered li {
-  margin-bottom: 8px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background-color: rgba(0,198,255,0.1);
+#library, #author, #learn {
+  max-width: 800px;
+  margin: 20px auto;
 }
 
-.list-group-numbered li:hover {
-  background-color: rgba(0,198,255,0.2);
+/* Headings */
+h1, h2, h3, h5 {
+  font-weight: 600;
+  color: inherit;
 }
 
-/* =======================
-   Inputs & Textarea
-======================= */
-input.form-control, textarea.form-control, select.form-select {
-  border-radius: 8px;
-  transition: box-shadow 0.2s;
+/* Inputs & Forms */
+input, select, textarea {
+  border-radius: 6px !important;
+  border: 1px solid #ccc !important;
 }
 
-input.form-control:focus, textarea.form-control:focus, select.form-select:focus {
-  box-shadow: 0 0 5px #00ffc3;
-  border-color: #00ffc3;
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #1e3a5f !important;
+  color: #e9f6f8 !important;
+  border-color: #00b894 !important;
 }
 
-/* =======================
-   Footer
-======================= */
-footer {
-  background-color: rgba(0,198,255,0.05);
-}
-
-/* =======================
-   Dark Mode Adjustments
-======================= */
-body.dark-mode .card, body.dark-mode .list-group-item {
-  background-color: rgba(255,255,255,0.05);
-  color: #f0f8ff;
-}
-
-body.dark-mode input.form-control, body.dark-mode textarea.form-control, body.dark-mode select.form-select {
-  background-color: rgba(255,255,255,0.05);
-  color: #f0f8ff;
-  border-color: #00ffc3;
-}
-
-body.dark-mode .flashcard {
-  background: linear-gradient(135deg,#00ffc3,#0072ff);
-}
-
-body.dark-mode footer {
-  background-color: rgba(0,198,255,0.1);
+/* Animations */
+.card, .btn, .navbar {
+  transition: all 0.3s ease;
 }
