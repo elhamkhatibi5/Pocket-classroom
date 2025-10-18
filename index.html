@@ -11,7 +11,7 @@
 </head>
 <body class="light-mode">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+<nav class="navbar navbar-expand-lg navbar-dark bg-gradient shadow fixed-top" style="background: linear-gradient(90deg,#00c6ff,#0072ff);">
   <div class="container-fluid">
     <a class="navbar-brand d-flex align-items-center" href="#">
       <i class="bi bi-mortarboard-fill me-2 fs-4 text-warning"></i>
@@ -31,10 +31,10 @@
   <!-- Library -->
   <section id="library" class="my-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h3><i class="bi bi-journal-text text-primary"></i> Your Capsules</h3>
+      <h3><i class="bi bi-journal-text text-white"></i> Your Capsules</h3>
       <div>
         <button id="newCapsuleBtn" class="btn btn-success me-2"><i class="bi bi-plus-circle"></i> New Capsule</button>
-        <button id="importBtn" class="btn btn-outline-info"><i class="bi bi-upload"></i> Import JSON</button>
+        <button id="importBtn" class="btn btn-outline-info me-2"><i class="bi bi-upload"></i> Import JSON</button>
         <button id="exportBtn" class="btn btn-outline-warning"><i class="bi bi-download"></i> Export JSON</button>
       </div>
     </div>
@@ -44,18 +44,29 @@
 
   <!-- Author -->
   <section id="author" class="my-5">
-    <h3 class="mb-3"><i class="bi bi-pencil-square text-warning"></i> Create or Edit Capsule</h3>
+    <h3 class="mb-3 text-white"><i class="bi bi-pencil-square text-warning"></i> Create or Edit Capsule</h3>
     <form id="metaForm" class="card p-3 shadow-sm mb-4">
       <div class="row g-3">
-        <div class="col-md-6"><label class="form-label">Title</label><input type="text" id="titleInput" class="form-control"></div>
-        <div class="col-md-3"><label class="form-label">Subject</label><input type="text" id="subjectInput" class="form-control"></div>
-        <div class="col-md-3"><label class="form-label">Level</label>
-          <select id="levelInput" class="form-select"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+        <div class="col-md-6">
+          <label class="form-label">Title</label>
+          <input type="text" id="titleInput" class="form-control" placeholder="Enter capsule title">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Subject</label>
+          <input type="text" id="subjectInput" class="form-control" placeholder="Enter subject">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Level</label>
+          <select id="levelInput" class="form-select">
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
         </div>
       </div>
       <div class="mt-3">
         <label class="form-label">Description</label>
-        <textarea id="descInput" class="form-control" rows="2"></textarea>
+        <textarea id="descInput" class="form-control" rows="2" placeholder="Capsule description..."></textarea>
       </div>
     </form>
 
@@ -79,7 +90,7 @@
 
   <!-- Learn -->
   <section id="learn" class="my-5">
-    <h3 class="mb-3"><i class="bi bi-lightbulb text-info"></i> Learn Mode</h3>
+    <h3 class="mb-3 text-white"><i class="bi bi-lightbulb text-info"></i> Learn Mode</h3>
     <select id="learnSelector" class="form-select w-auto mb-3"></select>
 
     <div id="learn-notes" class="mb-4">
@@ -89,7 +100,7 @@
 
     <div id="learn-flashcards" class="text-center mb-4">
       <h5><i class="bi bi-card-text"></i> Flashcards</h5>
-      <div id="flashcardDisplay" class="flashcard mx-auto my-3">Click to Flip</div>
+      <div id="flashcardDisplay" class="flashcard mx-auto my-3 p-3 border rounded shadow">Click to Flip</div>
       <div class="d-flex justify-content-center gap-2">
         <button id="prevCardBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i></button>
         <button id="flipCardBtn" class="btn btn-warning btn-sm"><i class="bi bi-arrow-repeat"></i></button>
@@ -102,7 +113,6 @@
       <div id="quizContainer" class="card p-3 shadow-sm"></div>
     </div>
   </section>
-
 </main>
 
 <footer class="text-center py-3 mt-4 border-top text-muted">
