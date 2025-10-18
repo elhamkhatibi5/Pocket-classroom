@@ -1,15 +1,139 @@
 
-body.light-mode { background: #f8f9fa; color: #212529; }
-body.dark-mode { background: #121212; color: #f8f9fa; }
+/* style.css */
 
-.navbar { transition: 0.3s; }
-.navbar .nav-link:hover { text-decoration: underline; }
+/* =======================
+   General & Body
+======================= */
+body.light-mode {
+  background-color: #f0f8ff;
+  color: #222;
+}
 
-.flashcard { width: 300px; height: 180px; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; perspective: 1000px; transition: 0.3s; }
-body.dark-mode .flashcard { background: #1f1f1f; color: #fff; }
+body.dark-mode {
+  background-color: #0d1b2a;
+  color: #f0f8ff;
+}
 
-.list-group-item { display: flex; justify-content: space-between; align-items: center; }
+h3, h5 {
+  font-weight: 600;
+}
 
-button { cursor: pointer; }
+/* =======================
+   Navbar
+======================= */
+.navbar {
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
 
-.card p { margin: 0; }
+.nav-link {
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: #00ffc3 !important;
+}
+
+/* =======================
+   Buttons
+======================= */
+.btn-outline-light, .btn-outline-info, .btn-outline-warning, .btn-outline-primary {
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.btn-outline-light:hover, .btn-outline-info:hover, .btn-outline-warning:hover, .btn-outline-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* =======================
+   Cards & Lists
+======================= */
+.card, .list-group-item {
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover, .list-group-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* =======================
+   Flashcards
+======================= */
+.flashcard {
+  width: 300px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  background: linear-gradient(135deg,#00c6ff,#0072ff);
+  color: #fff;
+  cursor: pointer;
+  perspective: 1000px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transition: transform 0.6s;
+}
+
+.flashcard.flipped {
+  transform: rotateY(180deg);
+}
+
+/* =======================
+   Notes & Quiz
+======================= */
+.list-group-numbered li {
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: rgba(0,198,255,0.1);
+}
+
+.list-group-numbered li:hover {
+  background-color: rgba(0,198,255,0.2);
+}
+
+/* =======================
+   Inputs & Textarea
+======================= */
+input.form-control, textarea.form-control, select.form-select {
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+}
+
+input.form-control:focus, textarea.form-control:focus, select.form-select:focus {
+  box-shadow: 0 0 5px #00ffc3;
+  border-color: #00ffc3;
+}
+
+/* =======================
+   Footer
+======================= */
+footer {
+  background-color: rgba(0,198,255,0.05);
+}
+
+/* =======================
+   Dark Mode Adjustments
+======================= */
+body.dark-mode .card, body.dark-mode .list-group-item {
+  background-color: rgba(255,255,255,0.05);
+  color: #f0f8ff;
+}
+
+body.dark-mode input.form-control, body.dark-mode textarea.form-control, body.dark-mode select.form-select {
+  background-color: rgba(255,255,255,0.05);
+  color: #f0f8ff;
+  border-color: #00ffc3;
+}
+
+body.dark-mode .flashcard {
+  background: linear-gradient(135deg,#00ffc3,#0072ff);
+}
+
+body.dark-mode footer {
+  background-color: rgba(0,198,255,0.1);
+}
