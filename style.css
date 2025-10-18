@@ -1,73 +1,15 @@
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #121212;
-  color: #f5f5f5;
-}
+body.light-mode { background: #f8f9fa; color: #212529; }
+body.dark-mode { background: #121212; color: #f8f9fa; }
 
-body.light-mode {
-  background-color: #f5f5f5;
-  color: #121212;
-}
+.navbar { transition: 0.3s; }
+.navbar .nav-link:hover { text-decoration: underline; }
 
-.navbar-brand {
-  font-weight: bold;
-}
+.flashcard { width: 300px; height: 180px; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; perspective: 1000px; transition: 0.3s; }
+body.dark-mode .flashcard { background: #1f1f1f; color: #fff; }
 
-.app-section {
-  min-height: 70vh;
-}
+.list-group-item { display: flex; justify-content: space-between; align-items: center; }
 
-/* Card styling */
-.capsule-card {
-  transition: transform 0.2s;
-}
-.capsule-card:hover {
-  transform: translateY(-3px);
-}
+button { cursor: pointer; }
 
-/* Badge Colors */
-.badge-level {
-  background: linear-gradient(45deg, #00c6ff, #0072ff);
-  color: white;
-}
-
-/* Flashcard flip */
-.flashcard {
-  width: 100%;
-  min-height: 120px;
-  perspective: 1000px;
-}
-.flashcard-inner {
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  position: relative;
-}
-.flashcard.flipped .flashcard-inner {
-  transform: rotateY(180deg);
-}
-.flashcard-front,
-.flashcard-back {
-  position: absolute;
-  width: 100%;
-  backface-visibility: hidden;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #1e1e1e;
-  color: white;
-}
-body.light-mode .flashcard-front,
-body.light-mode .flashcard-back {
-  background-color: #fff;
-  color: #121212;
-}
-.flashcard-back {
-  transform: rotateY(180deg);
-}
-
-/* Buttons hover */
-button:hover {
-  opacity: 0.85;
-  cursor: pointer;
-}
+.card p { margin: 0; }
